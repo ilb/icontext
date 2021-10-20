@@ -3,6 +3,9 @@ import * as fs from 'fs';
 import WebXmlReader from './WebXmlReader';
 import ContextXmlReader from './ContextXmlReader';
 import LDAPFactory from '@ilb/node_ldap';
+import createDebug from 'debug';
+
+const debug = createDebug('node_context');
 
 class ContextFactory {
   constructor({ webXmlPath, contextXmlPath, ldapFactory }) {
@@ -27,12 +30,14 @@ class ContextFactory {
     }
     const ldapResource = await this.ldapFactory.getLDAPResource();
     const ldapPrefix = process.env.LDAPPREFIX || '';
+    debug('ldapPrefix = %s', ldapPrefix);
 
     async function resourceResolver(name) {
       if (ldapPrefix && name.startsWith('.')) {
         name = ldapPrefix + name;
       }
       const value = await ldapResource.lookup(name);
+      debug('ldapResource.lookup(%s) = %s', name, value);
       // console.log({ name, value });
       return value;
     }
