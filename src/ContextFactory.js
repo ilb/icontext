@@ -13,6 +13,7 @@ class ContextFactory {
     this.webXmlPath = webXmlPath || path.resolve(process.cwd(), 'conf/web.xml');
     this.contextXmlPath = contextXmlPath || this.getDefaultContextXmlPath();
     this.ldapFactory = ldapFactory || new LDAPFactory();
+    debug('webXmlPath = %s, contextXmlPath = %s', this.webXmlPath, this.contextXmlPath);
   }
   getDefaultContextXmlPath() {
     let contextXmlPath = path.resolve(path.join(process.env.HOME, '.config/context.xml'));
