@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/">
+
+    <Environment name="apps.testapp.certfile" value="/etc/certs/testapp.pem" type="java.lang.String" override="false"/>
+    <Environment name="apps.testapp.cert_PASSWORD" value="cert_pass_here" type="java.lang.String" override="false"/>
+
+</Context>

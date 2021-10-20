@@ -1,48 +1,62 @@
 import ContextFactory from '../src/ContextFactory';
 import * as path from 'path';
+// import * as fs from 'fs';
 import LDAPFactory from '@ilb/node_ldap';
 
-const webXmlPath = path.resolve('test/web.xml');
-const contextXmlPath = path.resolve('test/context.xml');
-const ldapFactory = new LDAPFactory('test/ldap.conf');
-const ldapFactoryUnc = new LDAPFactory('/nonexistent.conf');
-
 process.env.LDAPPREFIX = 'ru.bystrobank';
-const contextFactory = new ContextFactory({ webXmlPath, contextXmlPath, ldapFactory });
-const contextFactoryUnc = new ContextFactory({
-  webXmlPath,
-  contextXmlPath,
-  ldapFactory: ldapFactoryUnc
-});
-
-const expected = {
-  '.apps.testapp.db': 'mysql://localhost/testapp',
-  'apps.testapp.db_PASSWORD': null,
-  'apps.testapp.certfile': '/etc/certs/testapp.pem',
-  'apps.testapp.cert_PASSWORD': 'cert_pass_here',
-  'ru.bystrobank.apps.workflow.ws': 'https://devel.net.ilb.ru/workflow-web/web'
-};
-
-const expectedUnc = {
-  '.apps.testapp.db': 'mysql://localhost/testapp',
-  'apps.testapp.db_PASSWORD': null,
-  'apps.testapp.certfile': '/etc/certs/testapp.pem',
-  'apps.testapp.cert_PASSWORD': 'cert_pass_here',
-  'ru.bystrobank.apps.workflow.ws': '!LDAP not configured!'
-};
 
 test('buildContext', async () => {
+  const ldapFactory = new LDAPFactory('test/ldap.conf');
+  const webXmlPath = path.resolve('test/web.xml');
+  const contextXmlPath = path.resolve('test/context.xml');
+  const contextFactory = new ContextFactory({ webXmlPath, contextXmlPath, ldapFactory });
+  const context = await contextFactory.buildContext();
+  const expected = {
+    '.apps.testapp.db': 'mysql://localhost/testapp',
+    'apps.testapp.db_PASSWORD': null,
+    'apps.testapp.certfile': '/etc/certs/testapp.pem',
+    'apps.testapp.cert_PASSWORD': 'cert_pass_here',
+    'ru.bystrobank.apps.workflow.ws': 'https://devel.net.ilb.ru/workflow-web/web'
+  };
+
+  expect(context).toStrictEqual(expected);
+  // let contextXmlPath = path.resolve(path.join(process.env.HOME, '.config/context.xml'));
+  // if (!fs.existsSync(contextXmlPath)) {
+  // }
+  // expect(contextFactory.getDefaultContextXmlPath()).toStrictEqual(contextXmlPath);
+});
+
+test('buildContextWithoutLdap', async () => {
+  const ldapFactory = new LDAPFactory('/nonexistent.conf');
+  const webXmlPath = path.resolve('test/web.xml');
+  const contextXmlPath = path.resolve('test/context.xml');
+
+  const contextFactory = new ContextFactory({
+    webXmlPath,
+    contextXmlPath,
+    ldapFactory
+  });
+
+  const expected = {
+    '.apps.testapp.db': 'mysql://localhost/testapp',
+    'apps.testapp.db_PASSWORD': null,
+    'apps.testapp.certfile': '/etc/certs/testapp.pem',
+    'apps.testapp.cert_PASSWORD': 'cert_pass_here',
+    'ru.bystrobank.apps.workflow.ws': '!LDAP not configured!'
+  };
+
   const context = await contextFactory.buildContext();
   expect(context).toStrictEqual(expected);
 });
 
-test('buildContextUnc', async () => {
-  const context = await contextFactoryUnc.buildContext();
-  expect(context).toStrictEqual(expectedUnc);
+test('getDefaultContextXmlPath', async () => {
+  const contextFactory = new ContextFactory({});
+  process.env.HOME = path.resolve('test/home');
+  let expected = path.resolve(path.join(process.env.HOME, '.config/context.xml'));
+  expect(contextFactory.getDefaultContextXmlPath()).toStrictEqual(expected);
+  process.env.HOME = path.resolve('nonexistent');
+  contextFactory.systemContextBase = path.resolve('test/systemcontext');
+  process.env.USERNAME = 'testuser';
+  expected = path.resolve('test/systemcontext/testuser/node_context.xml');
+  expect(contextFactory.getDefaultContextXmlPath()).toStrictEqual(expected);
 });
-// runing two tests hangs. TODO
-// test('build', async () => {
-//   await contextFactory.build();
-//   const expected = 'https://devel.net.ilb.ru/workflow-web/web';
-//   expect(process.env['ru.bystrobank.apps.workflow.ws']).toBe(expected);
-// });

@@ -9,10 +9,22 @@ const debug = createDebug('node_context');
 
 class ContextFactory {
   constructor({ webXmlPath, contextXmlPath, ldapFactory }) {
+    this.systemContextBase = '/etc/nodejs/context';
     this.webXmlPath = webXmlPath || path.resolve(process.cwd(), 'conf/web.xml');
-    this.contextXmlPath =
-      contextXmlPath || path.resolve(path.join(process.env.HOME, '.config/context.xml'));
+    this.contextXmlPath = contextXmlPath || this.getDefaultContextXmlPath();
     this.ldapFactory = ldapFactory || new LDAPFactory();
+  }
+  getDefaultContextXmlPath() {
+    let contextXmlPath = path.resolve(path.join(process.env.HOME, '.config/context.xml'));
+    if (!fs.existsSync(contextXmlPath)) {
+      const userName = process.env.USERNAME || process.env.USER;
+      const appName = path.basename(process.cwd());
+      contextXmlPath = `${this.systemContextBase}/${userName}/${appName}.xml`;
+      if (!fs.existsSync(contextXmlPath)) {
+        contextXmlPath = null;
+      }
+    }
+    return contextXmlPath;
   }
 
   /**
