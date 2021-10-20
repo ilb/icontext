@@ -1,12 +1,14 @@
 {
   "files.associations": {
-    "*.js": "javascriptreact"
+    "*.js": "javascriptreact",
+    "*.mjs": "javascriptreact"
   },
   "eslint.validate": [
     "javascript",
     "javascriptreact"
   ],
-  "eslint.autoFixOnSave": true,
+  "files.eol": "\n",
+  "jest.jestCommandLine": "NODE_OPTIONS=--experimental-vm-modules npx jest",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   }
