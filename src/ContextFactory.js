@@ -83,7 +83,7 @@ class ContextFactory {
       const webxml = fs.readFileSync(this.webXmlPath, 'utf8');
       const wxr = new WebXmlReader(webxml, resourceResolver);
       const values = await wxr.getValues();
-      // console.log({ values });
+      debug('WebXmlReader = %o', values);
       Object.assign(ldapContext, values);
     }
 
@@ -91,11 +91,13 @@ class ContextFactory {
       const contextXml = fs.readFileSync(this.contextXmlPath, 'utf8');
       const cxr = new ContextXmlReader(contextXml);
       const values = await cxr.getValues();
+      debug('ContextXmlReader = %o', values);
       assignExisting(ldapContext, values);
     }
-
+    debug('ldapContext = %o', ldapContext);
     this.ldapFactory.close();
     const context = options.keepDot ? ldapContext : removeDot(ldapContext);
+    debug('context = %o', context);
     return context;
   }
 }

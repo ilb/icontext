@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-    <env-entry>
-        <description>база данных откуда берем данные</description>
-        <env-entry-name>.apps.testapp.db</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>mysql://localhost/testapp</env-entry-value>
-    </env-entry>
-    <env-entry>
-        <description>пароль чтоб в базу мускульную ходить</description>
-        <env-entry-name>apps.testapp.db_PASSWORD</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <!-- значение не указываем - получим его из окружения -->
-    </env-entry>
-    <env-entry>
-        <description>файл с сертификатом, который будем использовать для аутентификации в других ресурсах</description>
-        <env-entry-name>apps.testapp.certfile</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <env-entry-value>/etc/certs/testapp.pem</env-entry-value>
-    </env-entry>
+  <env-entry>
+    <description>база данных откуда берем данные</description>
+    <env-entry-name>.apps.testapp.db</env-entry-name>
+    <env-entry-type>java.lang.String</env-entry-type>
+    <env-entry-value>mysql://localhost/testapp</env-entry-value>
+  </env-entry>
+  <env-entry>
+    <description>база данных откуда берем данные 2</description>
+    <env-entry-name>.apps.testapp2.db</env-entry-name>
+    <env-entry-type>java.lang.String</env-entry-type>
+  </env-entry>
+  <env-entry>
+    <description>пароль чтоб в базу мускульную ходить</description>
+    <env-entry-name>apps.testapp.db_PASSWORD</env-entry-name>
+    <env-entry-type>java.lang.String</env-entry-type>
+    <!-- значение не указываем - получим его из окружения -->
+  </env-entry>
+  <env-entry>
+    <description>файл с сертификатом, который будем использовать для аутентификации в других ресурсах</description>
+    <env-entry-name>apps.testapp.certfile</env-entry-name>
+    <env-entry-type>java.lang.String</env-entry-type>
+    <env-entry-value>/etc/certs/testapp.pem</env-entry-value>
+  </env-entry>
 
-    <env-entry>
-        <description>пароль от файла с сертификатом, который будем использовать для аутентификации в других ресурсах</description>
-        <!-- у секретов обязательно должен быть суффикс _PASSWORD чтобы ловушка ошибок замазывала значения секретов в дампах -->
-        <env-entry-name>apps.testapp.cert_PASSWORD</env-entry-name>
-        <env-entry-type>java.lang.String</env-entry-type>
-        <!-- значение не указываем - получим его из окружения -->
-    </env-entry>
+  <env-entry>
+    <description>пароль от файла с сертификатом, который будем использовать для аутентификации в других ресурсах</description>
+    <!-- у секретов обязательно должен быть суффикс _PASSWORD чтобы ловушка ошибок замазывала значения секретов в дампах -->
+    <env-entry-name>apps.testapp.cert_PASSWORD</env-entry-name>
+    <env-entry-type>java.lang.String</env-entry-type>
+    <!-- значение не указываем - получим его из окружения -->
+  </env-entry>
 
-    <resource-env-ref>
-        <description>Сервисы workflow</description>
-        <resource-env-ref-name>ru.bystrobank.apps.workflow.ws</resource-env-ref-name>
-        <resource-env-ref-type>javax.jms.Queue</resource-env-ref-type>
-    </resource-env-ref>
+  <resource-env-ref>
+    <description>Сервисы workflow</description>
+    <resource-env-ref-name>ru.bystrobank.apps.workflow.ws</resource-env-ref-name>
+    <resource-env-ref-type>javax.jms.Queue</resource-env-ref-type>
+  </resource-env-ref>
 </web-app>

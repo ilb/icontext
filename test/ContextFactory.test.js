@@ -13,6 +13,7 @@ test('buildContext', async () => {
   const context = await contextFactory.buildContext();
   const expected = {
     'apps.testapp.db': 'mysql://localhost/testapp',
+    'apps.testapp2.db': 'postgresql://localhost/testapp',
     'apps.testapp.db_PASSWORD': null,
     'apps.testapp.certfile': '/etc/certs/testapp.pem',
     'apps.testapp.cert_PASSWORD': 'cert_pass_here',
@@ -29,6 +30,7 @@ test('buildContextKeepDot', async () => {
   const context = await contextFactory.buildContext({ keepDot: true });
   const expected = {
     '.apps.testapp.db': 'mysql://localhost/testapp',
+    '.apps.testapp2.db': 'postgresql://localhost/testapp',
     'apps.testapp.db_PASSWORD': null,
     'apps.testapp.certfile': '/etc/certs/testapp.pem',
     'apps.testapp.cert_PASSWORD': 'cert_pass_here',
@@ -50,6 +52,7 @@ test('buildContextWithoutLdap', async () => {
 
   const expected = {
     'apps.testapp.db': 'mysql://localhost/testapp',
+    'apps.testapp2.db': 'postgresql://localhost/testapp',
     'apps.testapp.db_PASSWORD': null,
     'apps.testapp.certfile': '/etc/certs/testapp.pem',
     'apps.testapp.cert_PASSWORD': 'cert_pass_here',
