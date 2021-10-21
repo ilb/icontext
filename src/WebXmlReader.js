@@ -26,7 +26,7 @@ class WebXmlReader extends PropertyReader {
       });
     }
 
-    if (resourceResolver) {
+    if (config['web-app']['resource-env-ref'] && resourceResolver) {
       for (const resource of config['web-app']['resource-env-ref']) {
         const val = WebXmlReader.getResourceEntryValue(resource);
         val.value = await resourceResolver(val.name);

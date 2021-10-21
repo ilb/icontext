@@ -22,6 +22,17 @@ test('buildContext', async () => {
   expect(context).toStrictEqual(expected);
 });
 
+test('buildContext2', async () => {
+  const ldapFactory = new LDAPFactory('test/ldap.conf');
+  const webXmlPath = path.resolve('test/web2.xml');
+  const contextXmlPath = path.resolve('test/context.xml');
+  const contextFactory = new ContextFactory({ webXmlPath, contextXmlPath, ldapFactory });
+  const context = await contextFactory.buildContext();
+  const expected = {
+    'apps.testapp.db': 'mysql://localhost/testapp'
+  };
+  expect(context).toStrictEqual(expected);
+});
 test('buildContextKeepDot', async () => {
   const ldapFactory = new LDAPFactory('test/ldap.conf');
   const webXmlPath = path.resolve('test/web.xml');
