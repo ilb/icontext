@@ -12,18 +12,29 @@ test('buildContext', async () => {
   const contextFactory = new ContextFactory({ webXmlPath, contextXmlPath, ldapFactory });
   const context = await contextFactory.buildContext();
   const expected = {
+    'apps.testapp.db': 'mysql://localhost/testapp',
+    'apps.testapp.db_PASSWORD': null,
+    'apps.testapp.certfile': '/etc/certs/testapp.pem',
+    'apps.testapp.cert_PASSWORD': 'cert_pass_here',
+    'ru.bystrobank.apps.workflow.ws': 'https://devel.net.ilb.ru/workflow-web/web'
+  };
+  expect(context).toStrictEqual(expected);
+});
+
+test('buildContextKeepDot', async () => {
+  const ldapFactory = new LDAPFactory('test/ldap.conf');
+  const webXmlPath = path.resolve('test/web.xml');
+  const contextXmlPath = path.resolve('test/context.xml');
+  const contextFactory = new ContextFactory({ webXmlPath, contextXmlPath, ldapFactory });
+  const context = await contextFactory.buildContext({ keepDot: true });
+  const expected = {
     '.apps.testapp.db': 'mysql://localhost/testapp',
     'apps.testapp.db_PASSWORD': null,
     'apps.testapp.certfile': '/etc/certs/testapp.pem',
     'apps.testapp.cert_PASSWORD': 'cert_pass_here',
     'ru.bystrobank.apps.workflow.ws': 'https://devel.net.ilb.ru/workflow-web/web'
   };
-
   expect(context).toStrictEqual(expected);
-  // let contextXmlPath = path.resolve(path.join(process.env.HOME, '.config/context.xml'));
-  // if (!fs.existsSync(contextXmlPath)) {
-  // }
-  // expect(contextFactory.getDefaultContextXmlPath()).toStrictEqual(contextXmlPath);
 });
 
 test('buildContextWithoutLdap', async () => {
@@ -38,7 +49,7 @@ test('buildContextWithoutLdap', async () => {
   });
 
   const expected = {
-    '.apps.testapp.db': 'mysql://localhost/testapp',
+    'apps.testapp.db': 'mysql://localhost/testapp',
     'apps.testapp.db_PASSWORD': null,
     'apps.testapp.certfile': '/etc/certs/testapp.pem',
     'apps.testapp.cert_PASSWORD': 'cert_pass_here',
@@ -57,6 +68,6 @@ test('getDefaultContextXmlPath', async () => {
   process.env.HOME = path.resolve('nonexistent');
   contextFactory.systemContextBase = path.resolve('test/systemcontext');
   process.env.USERNAME = 'testuser';
-  expected = path.resolve('test/systemcontext/testuser/node_context.xml');
+  expected = path.resolve('test/systemcontext/testuser/testuser.xml');
   expect(contextFactory.getDefaultContextXmlPath()).toStrictEqual(expected);
 });

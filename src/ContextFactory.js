@@ -7,6 +7,20 @@ import createDebug from 'debug';
 
 const debug = createDebug('node_context');
 
+function assignExisting(target, source) {
+  for (const prop in source) {
+    if (target[prop] !== undefined) {
+      target[prop] = source[prop];
+    }
+  }
+}
+function removeDot(source) {
+  const target = {};
+  for (const prop in source) {
+    target[prop.startsWith('.') ? prop.substring(1) : prop] = source[prop];
+  }
+  return target;
+}
 class ContextFactory {
   constructor({ webXmlPath, contextXmlPath, ldapFactory }) {
     this.systemContextBase = '/etc/nodejs/context';
@@ -19,8 +33,7 @@ class ContextFactory {
     let contextXmlPath = path.resolve(path.join(process.env.HOME, '.config/context.xml'));
     if (!fs.existsSync(contextXmlPath)) {
       const userName = process.env.USERNAME || process.env.USER;
-      const appName = path.basename(process.cwd());
-      contextXmlPath = `${this.systemContextBase}/${userName}/${appName}.xml`;
+      contextXmlPath = `${this.systemContextBase}/${userName}/${userName}.xml`;
       if (!fs.existsSync(contextXmlPath)) {
         contextXmlPath = null;
       }
@@ -32,9 +45,8 @@ class ContextFactory {
    * Method populates process.env
    * @returns {undefined}pop
    */
-  async build() {
-    const context = await this.buildContext();
-    Object.assign(process.env, context);
+  async build(options = {}) {
+    const context = await this.buildContext(options);
     return context;
   }
   async getResourceResolver() {
@@ -63,8 +75,8 @@ class ContextFactory {
    * context.xml values have higher priority
    * @returns {undefined}
    */
-  async buildContext() {
-    const context = {};
+  async buildContext(options = {}) {
+    const ldapContext = {};
     const resourceResolver = await this.getResourceResolver();
 
     if (this.webXmlPath && fs.existsSync(this.webXmlPath)) {
@@ -72,27 +84,19 @@ class ContextFactory {
       const wxr = new WebXmlReader(webxml, resourceResolver);
       const values = await wxr.getValues();
       // console.log({ values });
-      Object.assign(context, values);
+      Object.assign(ldapContext, values);
     }
 
     if (this.contextXmlPath && fs.existsSync(this.contextXmlPath)) {
       const contextXml = fs.readFileSync(this.contextXmlPath, 'utf8');
       const cxr = new ContextXmlReader(contextXml);
       const values = await cxr.getValues();
-      ContextFactory.assignExisting(context, values);
+      assignExisting(ldapContext, values);
     }
 
     this.ldapFactory.close();
-
+    const context = options.keepDot ? ldapContext : removeDot(ldapContext);
     return context;
-  }
-
-  static assignExisting(target, source) {
-    for (var prop in source) {
-      if (source.hasOwnProperty(prop) && target.hasOwnProperty(prop)) {
-        target[prop] = source[prop];
-      }
-    }
   }
 }
 
