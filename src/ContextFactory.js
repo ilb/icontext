@@ -47,6 +47,7 @@ class ContextFactory {
    */
   async build(options = {}) {
     const context = await this.buildContext(options);
+    Object.assign(process.env, context);
     return context;
   }
   async getResourceResolver() {
