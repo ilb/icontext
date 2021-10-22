@@ -7,9 +7,27 @@ import createDebug from 'debug';
 
 const debug = createDebug('node_context');
 
+/**
+ * copies all properties from source which exists in target
+ * @param {*} target
+ * @param {*} source
+ */
 function assignExisting(target, source) {
   for (const prop in source) {
     if (target[prop] !== undefined) {
+      target[prop] = source[prop];
+    }
+  }
+}
+
+/**
+ * copies all properties from source which does NOT exists in target
+ * @param {*} target
+ * @param {*} source
+ */
+function assignNotExisting(target, source) {
+  for (const prop in source) {
+    if (target[prop] === undefined) {
       target[prop] = source[prop];
     }
   }
@@ -47,7 +65,11 @@ class ContextFactory {
    */
   async build(options = {}) {
     const context = await this.buildContext(options);
-    Object.assign(process.env, context);
+    if (options.overwrite) {
+      Object.assign(process.env, context);
+    } else {
+      assignNotExisting(process.env, context);
+    }
     return context;
   }
   async getResourceResolver() {

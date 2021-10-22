@@ -74,6 +74,17 @@ test('buildContextWithoutLdap', async () => {
   expect(context).toStrictEqual(expected);
 });
 
+test('build', async () => {
+  const ldapFactory = new LDAPFactory('test/ldap.conf');
+  const webXmlPath = path.resolve('test/web.xml');
+  const contextXmlPath = path.resolve('test/context.xml');
+  process.env['apps.testapp2.db'] = 'postgresql://localhost/testapp2';
+  const contextFactory = new ContextFactory({ webXmlPath, contextXmlPath, ldapFactory });
+  await contextFactory.build();
+  expect(process.env['apps.testapp.db']).toStrictEqual('mysql://localhost/testapp');
+  expect(process.env['apps.testapp2.db']).toStrictEqual('postgresql://localhost/testapp2');
+});
+
 test('getDefaultContextXmlPath', async () => {
   const contextFactory = new ContextFactory({});
   process.env.HOME = path.resolve('test/home');
