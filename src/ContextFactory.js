@@ -49,10 +49,14 @@ class ContextFactory {
   }
   getDefaultContextXmlPath() {
     let contextXmlPath = path.resolve(path.join(process.env.HOME, '.config/context.xml'));
-    if (!fs.existsSync(contextXmlPath)) {
+    let contextXmlPathExists = fs.existsSync(contextXmlPath);
+    debug('contextXmlPath = %s, exists = %o', contextXmlPath, contextXmlPathExists);
+    if (!contextXmlPathExists) {
       const userName = process.env.USERNAME || process.env.USER;
       contextXmlPath = `${this.systemContextBase}/${userName}/${userName}.xml`;
-      if (!fs.existsSync(contextXmlPath)) {
+      contextXmlPathExists = fs.existsSync(contextXmlPath);
+      debug('contextXmlPath = %s, exists = %o', contextXmlPath, contextXmlPathExists);
+      if (!contextXmlPathExists) {
         contextXmlPath = null;
       }
     }
