@@ -9,7 +9,8 @@ test('parses context.xml', async () => {
   const expected = {
     'apps.testapp.certfile': '/etc/certs/testapp.pem',
     '.apps.testapp2.db': 'postgresql://localhost/testapp',
-    'apps.testapp.cert_PASSWORD': 'cert_pass_here'
+    'apps.testapp.cert_PASSWORD': 'cert_pass_here',
+    'apps.testapp.db_PASSWORD': 'db_password_here'
   };
   const values = await cxr.getValues();
   expect(values).toStrictEqual(expected);

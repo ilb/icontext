@@ -1,6 +1,5 @@
 import ContextFactory from '../src/ContextFactory';
-import * as path from 'path';
-// import * as fs from 'fs';
+import path from 'path';
 import LDAPFactory from '@ilb/node_ldap';
 
 process.env.LDAPPREFIX = 'ru.bystrobank';
@@ -9,12 +8,13 @@ test('buildContext', async () => {
   const ldapFactory = new LDAPFactory('test/ldap.conf');
   const webXmlPath = path.resolve('test/web.xml');
   const contextXmlPath = path.resolve('test/context.xml');
-  const contextFactory = new ContextFactory({ webXmlPath, contextXmlPath, ldapFactory });
+  const envJsPath = path.resolve('test/.env.js');
+  const contextFactory = new ContextFactory({ webXmlPath, contextXmlPath, envJsPath, ldapFactory });
   const context = await contextFactory.buildContext();
   const expected = {
     'apps.testapp.db': 'mysql://localhost/testapp',
     'apps.testapp2.db': 'postgresql://localhost/testapp',
-    'apps.testapp.db_PASSWORD': null,
+    'apps.testapp.db_PASSWORD': 'db_password_here',
     'apps.testapp.certfile': '/etc/certs/testapp.pem',
     'apps.testapp.cert_PASSWORD': 'cert_pass_here',
     'ru.bystrobank.apps.workflow.ws': 'https://devel.net.ilb.ru/workflow-web/web'
@@ -42,7 +42,7 @@ test('buildContextKeepDot', async () => {
   const expected = {
     '.apps.testapp.db': 'mysql://localhost/testapp',
     '.apps.testapp2.db': 'postgresql://localhost/testapp',
-    'apps.testapp.db_PASSWORD': null,
+    'apps.testapp.db_PASSWORD': 'db_password_here',
     'apps.testapp.certfile': '/etc/certs/testapp.pem',
     'apps.testapp.cert_PASSWORD': 'cert_pass_here',
     'ru.bystrobank.apps.workflow.ws': 'https://devel.net.ilb.ru/workflow-web/web'
@@ -51,6 +51,7 @@ test('buildContextKeepDot', async () => {
 });
 
 test('buildContextWithoutLdap', async () => {
+  delete process.env.LDAP_URL;
   const ldapFactory = new LDAPFactory('/nonexistent.conf');
   const webXmlPath = path.resolve('test/web.xml');
   const contextXmlPath = path.resolve('test/context.xml');
@@ -64,7 +65,7 @@ test('buildContextWithoutLdap', async () => {
   const expected = {
     'apps.testapp.db': 'mysql://localhost/testapp',
     'apps.testapp2.db': 'postgresql://localhost/testapp',
-    'apps.testapp.db_PASSWORD': null,
+    'apps.testapp.db_PASSWORD': 'db_password_here',
     'apps.testapp.certfile': '/etc/certs/testapp.pem',
     'apps.testapp.cert_PASSWORD': 'cert_pass_here',
     'ru.bystrobank.apps.workflow.ws': '!LDAP not configured!'
@@ -79,10 +80,14 @@ test('build', async () => {
   const webXmlPath = path.resolve('test/web.xml');
   const contextXmlPath = path.resolve('test/context.xml');
   process.env['apps.testapp2.db'] = 'postgresql://localhost/testapp2';
-  const contextFactory = new ContextFactory({ webXmlPath, contextXmlPath, ldapFactory });
+  const envJsPath = path.resolve('test/.env.js');
+  const contextFactory = new ContextFactory({ webXmlPath, contextXmlPath, envJsPath, ldapFactory });
   await contextFactory.build();
   expect(process.env['apps.testapp.db']).toStrictEqual('mysql://localhost/testapp');
   expect(process.env['apps.testapp2.db']).toStrictEqual('postgresql://localhost/testapp2');
+  expect(process.env['DATABASE_URL']).toStrictEqual(
+    'mysql://testapp:db_password_here@localhost/testapp'
+  );
 });
 
 test('getDefaultContextXmlPath', async () => {

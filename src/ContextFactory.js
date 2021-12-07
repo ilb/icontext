@@ -40,10 +40,11 @@ function removeDot(source) {
   return target;
 }
 class ContextFactory {
-  constructor({ webXmlPath, contextXmlPath, ldapFactory }) {
+  constructor({ webXmlPath, contextXmlPath, envJsPath, ldapFactory }) {
     this.systemContextBase = '/etc/nodejs/context';
     this.webXmlPath = webXmlPath || path.resolve(process.cwd(), 'conf/web.xml');
     this.contextXmlPath = contextXmlPath || this.getDefaultContextXmlPath();
+    this.envJsPath = envJsPath || this.getDefaultEnvJsPath();
     this.ldapFactory = ldapFactory || new LDAPFactory();
     debug('webXmlPath = %s, contextXmlPath = %s', this.webXmlPath, this.contextXmlPath);
   }
@@ -62,6 +63,20 @@ class ContextFactory {
     }
     return contextXmlPath;
   }
+  getDefaultEnvJsPath() {
+    let envJsPath = path.resolve(process.cwd(), '.env.mjs');
+    let envJsPathExists = fs.existsSync(envJsPath);
+    debug('envJsPath = %s, exists = %o', envJsPath, envJsPathExists);
+    if (!envJsPathExists) {
+      envJsPath = path.resolve(process.cwd(), '.env.js');
+      envJsPathExists = fs.existsSync(envJsPath);
+      debug('envJsPath = %s, exists = %o', envJsPath, envJsPathExists);
+      if (!envJsPathExists) {
+        envJsPath = null;
+      }
+    }
+    return envJsPath;
+  }
 
   /**
    * Method populates process.env
@@ -74,6 +89,7 @@ class ContextFactory {
     } else {
       assignNotExisting(process.env, context);
     }
+    await this.adoptEnv();
     return context;
   }
   async getResourceResolver() {
@@ -126,6 +142,11 @@ class ContextFactory {
     const context = options.keepDot ? ldapContext : removeDot(ldapContext);
     debug('context = %o', context);
     return context;
+  }
+  async adoptEnv() {
+    if (this.envJsPath && fs.existsSync(this.envJsPath)) {
+      await import(this.envJsPath);
+    }
   }
 }
 

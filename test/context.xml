@@ -4,4 +4,5 @@
   <Environment name="apps.testapp.certfile" value="/etc/certs/testapp.pem" type="java.lang.String" override="false" />
   <Environment name="apps.testapp.cert_PASSWORD" value="cert_pass_here" type="java.lang.String" override="false" />
   <Environment name=".apps.testapp2.db" value="postgresql://localhost/testapp" type="java.lang.String" override="false" />
+  <Environment name="apps.testapp.db_PASSWORD" value="db_password_here" type="java.lang.String" override="false" />
 </Context>
