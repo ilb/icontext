@@ -1,5 +1,5 @@
-import PropertyReader from './PropertyReader';
-import ValueParser from './ValueParser';
+import PropertyReader from './PropertyReader.js';
+import ValueParser from './ValueParser.js';
 import xml2js from 'xml2js-es6-promise';
 
 class ContextXmlReader extends PropertyReader {
