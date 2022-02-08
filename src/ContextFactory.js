@@ -54,7 +54,8 @@ class ContextFactory {
     debug('contextXmlPath = %s, exists = %o', contextXmlPath, contextXmlPathExists);
     if (!contextXmlPathExists) {
       const userName = process.env.USERNAME || process.env.USER;
-      contextXmlPath = `${this.systemContextBase}/${userName}/${userName}.xml`;
+      const workDir = path.basename(process.cwd());
+      contextXmlPath = `${this.systemContextBase}/${userName}/${workDir}.xml`;
       contextXmlPathExists = fs.existsSync(contextXmlPath);
       debug('contextXmlPath = %s, exists = %o', contextXmlPath, contextXmlPathExists);
       if (!contextXmlPathExists) {
