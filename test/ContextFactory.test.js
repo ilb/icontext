@@ -98,6 +98,6 @@ test('getDefaultContextXmlPath', async () => {
   process.env.HOME = path.resolve('nonexistent');
   contextFactory.systemContextBase = path.resolve('test/systemcontext');
   process.env.USERNAME = 'testuser';
-  expected = path.resolve('test/systemcontext/testuser/testuser.xml');
+  expected = path.resolve('test/systemcontext/testuser/node_context.xml');
   expect(contextFactory.getDefaultContextXmlPath()).toStrictEqual(expected);
 });
