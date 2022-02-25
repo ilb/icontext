@@ -4,6 +4,7 @@ class ValueParser {
     if (rawValue !== null) {
       switch (type) {
         case 'java.lang.String':
+        case 'javax.jms.Queue':
           value = rawValue;
           break;
         case 'java.lang.Boolean':
