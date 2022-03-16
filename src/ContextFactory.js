@@ -145,9 +145,11 @@ class ContextFactory {
     return context;
   }
   async adoptEnv() {
-    //if (this.envJsPath && fs.existsSync(this.envJsPath)) {
-    //  await import(this.envJsPath);
-    //}
+    if (this.envJsPath && fs.existsSync(this.envJsPath)) {
+      //  await import(this.envJsPath);
+      const envJs = fs.readFileSync(this.envJsPath, 'utf8');
+      eval(envJs);
+    }
   }
 }
 
