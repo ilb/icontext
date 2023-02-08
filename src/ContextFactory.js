@@ -4,25 +4,11 @@ import {
   getDefaultContextXmlPath,
   getDefaultEnvJsPath
 } from './defaults.cjs';
-import { parseWebXml } from './WebXmlReader.cjs';
-import { parseContextXml } from './ContextXmlReader.cjs';
 import LDAPFactory from '@ilb/node_ldap';
 import createDebug from 'debug';
+import { readContext } from './WebContextReader.cjs';
 
 const debug = createDebug('node_context');
-
-/**
- * copies all properties from source which exists in target
- * @param {*} target
- * @param {*} source
- */
-function assignExisting(target, source) {
-  for (const prop in source) {
-    if (target[prop] !== undefined) {
-      target[prop] = source[prop];
-    }
-  }
-}
 
 /**
  * resolve all undefined values with resolver function
@@ -73,11 +59,7 @@ class ContextFactory {
    */
   async build(options = {}) {
     const context = await this.buildContext(options);
-    if (options.overwrite) {
-      Object.assign(process.env, context);
-    } else {
-      assignNotExisting(process.env, context);
-    }
+    assignNotExisting(process.env, context);
     await this.adoptEnv();
     return context;
   }
@@ -108,22 +90,8 @@ class ContextFactory {
    * @returns {undefined}
    */
   async buildContext(options = {}) {
-    const ldapContext = {};
     const resourceResolver = await this.getResourceResolver();
-
-    if (this.webXmlPath && fs.existsSync(this.webXmlPath)) {
-      const webxml = fs.readFileSync(this.webXmlPath, 'utf8');
-      const values = parseWebXml(webxml);
-      debug('WebXmlReader = %o', values);
-      Object.assign(ldapContext, values);
-    }
-
-    if (this.contextXmlPath && fs.existsSync(this.contextXmlPath)) {
-      const contextXml = fs.readFileSync(this.contextXmlPath, 'utf8');
-      const values = parseContextXml(contextXml);
-      debug('ContextXmlReader = %o', values);
-      assignExisting(ldapContext, values);
-    }
+    const ldapContext = readContext(this.webXmlPath, this.contextXmlPath);
     await resolveEnv(ldapContext, resourceResolver);
     debug('ldapContext = %o', ldapContext);
     this.ldapFactory.close();
