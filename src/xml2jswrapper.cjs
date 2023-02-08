@@ -4,7 +4,7 @@ const parseString = require('xml2js').parseString;
  * @param {*} xml source xml
  * @returns result json
  */
-function xml2js(xml) {
+function xml2jswrapper(xml) {
   let result = null;
   parseString(xml, function (err, res) {
     if (err) {
@@ -15,4 +15,4 @@ function xml2js(xml) {
   return result;
 }
 
-module.exports = xml2js;
+module.exports = { xml2jswrapper };

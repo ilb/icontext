@@ -1,12 +1,10 @@
-import WebXmlReader from '../src/WebXmlReader';
+import { parseWebXml } from '../src/WebXmlReader.cjs';
 import * as fs from 'fs';
 import * as path from 'path';
 
 const contextPath = path.resolve('test/web.xml');
 
 test('parses context.xml', async () => {
-  const wxr = new WebXmlReader(fs.readFileSync(contextPath));
-
   const expected = {
     '.apps.testapp.db': 'mysql://localhost/testapp',
     '.apps.testapp2.db': null,
@@ -15,6 +13,7 @@ test('parses context.xml', async () => {
     'apps.testapp.cert_PASSWORD': null,
     'ru.bystrobank.apps.workflow.ws': undefined
   };
-  const values = await wxr.getValues();
+  const webxml = fs.readFileSync(contextPath);
+  const values = parseWebXml(webxml);
   expect(values).toStrictEqual(expected);
 });

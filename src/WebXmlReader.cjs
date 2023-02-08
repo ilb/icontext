@@ -1,8 +1,8 @@
-import { parseValue } from './ValueParser.cjs';
-import xml2js from './xml2js.cjs';
+const { parseValue } = require('./ValueParser.cjs');
+const { xml2jswrapper } = require('./xml2jswrapper.cjs');
 
-function parse(src) {
-  const config = xml2js(src);
+function parseWebXml(src) {
+  const config = xml2jswrapper(src);
 
   if (!config['web-app']) {
     throw new Error(`web.xml should contain web-app node`);
@@ -65,18 +65,4 @@ function getResourceEntryValue(resource) {
   return { type, name };
 }
 
-class WebXmlReader {
-  constructor(src) {
-    this.src = src;
-    this.values = null;
-  }
-
-  getValues() {
-    if (this.values === null) {
-      this.values = parse(this.src);
-    }
-    return this.values;
-  }
-}
-
-export default WebXmlReader;
+module.exports = { parseWebXml };

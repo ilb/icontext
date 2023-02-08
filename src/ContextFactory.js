@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import WebXmlReader from './WebXmlReader.js';
-import ContextXmlReader from './ContextXmlReader.js';
+import { parseWebXml } from './WebXmlReader.cjs';
+import { parseContextXml } from './ContextXmlReader.cjs';
 import LDAPFactory from '@ilb/node_ldap';
 import createDebug from 'debug';
 
@@ -140,16 +140,14 @@ class ContextFactory {
 
     if (this.webXmlPath && fs.existsSync(this.webXmlPath)) {
       const webxml = fs.readFileSync(this.webXmlPath, 'utf8');
-      const wxr = new WebXmlReader(webxml, resourceResolver);
-      const values = await wxr.getValues();
+      const values = parseWebXml(webxml);
       debug('WebXmlReader = %o', values);
       Object.assign(ldapContext, values);
     }
 
     if (this.contextXmlPath && fs.existsSync(this.contextXmlPath)) {
       const contextXml = fs.readFileSync(this.contextXmlPath, 'utf8');
-      const cxr = new ContextXmlReader(contextXml);
-      const values = await cxr.getValues();
+      const values = parseContextXml(contextXml);
       debug('ContextXmlReader = %o', values);
       assignExisting(ldapContext, values);
     }

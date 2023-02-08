@@ -1,8 +1,8 @@
-import { parseValue } from './ValueParser.cjs';
-import xml2js from './xml2js.cjs';
+const { parseValue } = require('./ValueParser.cjs');
+const { xml2jswrapper } = require('./xml2jswrapper.cjs');
 
-function parse(src) {
-  const sourceConfig = xml2js(src);
+function parseContextXml(src) {
+  const sourceConfig = xml2jswrapper(src);
   const parsedConfig = {};
   if (sourceConfig.Context && sourceConfig.Context.Environment) {
     sourceConfig.Context.Environment.forEach((environment) => {
@@ -44,18 +44,4 @@ function getEnvironmentValue(environment) {
   return { name, value };
 }
 
-class ContextXmlReader {
-  constructor(src) {
-    this.src = src;
-    this.values = null;
-  }
-
-  getValues() {
-    if (this.values === null) {
-      this.values = parse(this.src);
-    }
-    return this.values;
-  }
-}
-
-export default ContextXmlReader;
+module.exports = { parseContextXml };
