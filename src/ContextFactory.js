@@ -1,5 +1,9 @@
-import * as path from 'path';
 import * as fs from 'fs';
+import {
+  getDefaultWebXmlPath,
+  getDefaultContextXmlPath,
+  getDefaultEnvJsPath
+} from './defaults.cjs';
 import { parseWebXml } from './WebXmlReader.cjs';
 import { parseContextXml } from './ContextXmlReader.cjs';
 import LDAPFactory from '@ilb/node_ldap';
@@ -56,42 +60,11 @@ function removeDot(source) {
 }
 class ContextFactory {
   constructor({ webXmlPath, contextXmlPath, envJsPath, ldapFactory }) {
-    this.systemContextBase = '/etc/nodejs/context';
-    this.webXmlPath = webXmlPath || path.resolve(process.cwd(), 'conf/web.xml');
-    this.contextXmlPath = contextXmlPath || this.getDefaultContextXmlPath();
-    this.envJsPath = envJsPath || this.getDefaultEnvJsPath();
+    this.webXmlPath = webXmlPath || getDefaultWebXmlPath();
+    this.contextXmlPath = contextXmlPath || getDefaultContextXmlPath();
+    this.envJsPath = envJsPath || getDefaultEnvJsPath();
     this.ldapFactory = ldapFactory || new LDAPFactory();
     debug('webXmlPath = %s, contextXmlPath = %s', this.webXmlPath, this.contextXmlPath);
-  }
-  getDefaultContextXmlPath() {
-    let contextXmlPath = path.resolve(path.join(process.env.HOME, '.config/context.xml'));
-    let contextXmlPathExists = fs.existsSync(contextXmlPath);
-    debug('contextXmlPath = %s, exists = %o', contextXmlPath, contextXmlPathExists);
-    if (!contextXmlPathExists) {
-      const userName = process.env.USERNAME || process.env.USER;
-      const workDir = path.basename(process.cwd());
-      contextXmlPath = `${this.systemContextBase}/${userName}/${workDir}.xml`;
-      contextXmlPathExists = fs.existsSync(contextXmlPath);
-      debug('contextXmlPath = %s, exists = %o', contextXmlPath, contextXmlPathExists);
-      if (!contextXmlPathExists) {
-        contextXmlPath = null;
-      }
-    }
-    return contextXmlPath;
-  }
-  getDefaultEnvJsPath() {
-    let envJsPath = path.resolve(process.cwd(), '.env.mjs');
-    let envJsPathExists = fs.existsSync(envJsPath);
-    debug('envJsPath = %s, exists = %o', envJsPath, envJsPathExists);
-    if (!envJsPathExists) {
-      envJsPath = path.resolve(process.cwd(), '.env.js');
-      envJsPathExists = fs.existsSync(envJsPath);
-      debug('envJsPath = %s, exists = %o', envJsPath, envJsPathExists);
-      if (!envJsPathExists) {
-        envJsPath = null;
-      }
-    }
-    return envJsPath;
   }
 
   /**
