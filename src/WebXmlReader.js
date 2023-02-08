@@ -1,5 +1,5 @@
 import PropertyReader from './PropertyReader.js';
-import ValueParser from './ValueParser.js';
+import { parseValue } from './ValueParser.cjs';
 import xml2js from './xml2js.cjs';
 
 class WebXmlReader extends PropertyReader {
@@ -13,7 +13,7 @@ class WebXmlReader extends PropertyReader {
     this.resourceResolver = resourceResolver;
   }
   static async parse(src, resourceResolver) {
-    const config = await xml2js(src);
+    const config = xml2js(src);
 
     if (!config['web-app']) {
       throw new Error(`web.xml should contain web-app node`);
@@ -53,7 +53,7 @@ class WebXmlReader extends PropertyReader {
     if (name.length === 0) {
       throw new Error('env-entry-name missing, incorrect entry ' + JSON.stringify(entry));
     }
-    const value = ValueParser.parseValue(type, rawValue);
+    const value = parseValue(type, rawValue);
     return { type, name, value };
   }
   static getResourceEntryValue(resource) {

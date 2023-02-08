@@ -1,5 +1,5 @@
 import PropertyReader from './PropertyReader.js';
-import ValueParser from './ValueParser.js';
+import { parseValue } from './ValueParser.cjs';
 import xml2js from './xml2js.cjs';
 
 class ContextXmlReader extends PropertyReader {
@@ -12,7 +12,7 @@ class ContextXmlReader extends PropertyReader {
   static async parse(src) {
     //var xml2js = require('xml2js-es6-promise');
 
-    const sourceConfig = await xml2js(src);
+    const sourceConfig = xml2js(src);
     const parsedConfig = {};
     if (sourceConfig.Context && sourceConfig.Context.Environment) {
       sourceConfig.Context.Environment.forEach((environment) => {
@@ -49,7 +49,7 @@ class ContextXmlReader extends PropertyReader {
       throw new Error('incorrect Environment entry: value empty ' + JSON.stringify(environment));
     }
 
-    const value = ValueParser.parseValue(type, rawValue);
+    const value = parseValue(type, rawValue);
     //console.log(rawValue, type, value);
     return { name, value };
   }
