@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import {
   getDefaultWebXmlPath,
   getDefaultContextXmlPath,
@@ -7,43 +6,10 @@ import {
 import LDAPFactory from '@ilb/node_ldap';
 import createDebug from 'debug';
 import { readContext } from './WebContextReader.cjs';
+import { execJsFile, assignNotExisting, valueResolver, removeDot } from './utils.cjs';
 
 const debug = createDebug('node_context');
 
-/**
- * resolve all undefined values with resolver function
- * @param {*} values
- * @param {*} resourceResolver
- * @returns
- */
-async function resolveEnv(values, resourceResolver) {
-  for (const prop in values) {
-    if (values[prop] === undefined) {
-      values[prop] = await resourceResolver(prop);
-    }
-  }
-  return values;
-}
-
-/**
- * copies all properties from source which does NOT exists in target
- * @param {*} target
- * @param {*} source
- */
-function assignNotExisting(target, source) {
-  for (const prop in source) {
-    if (target[prop] === undefined) {
-      target[prop] = source[prop];
-    }
-  }
-}
-function removeDot(source) {
-  const target = {};
-  for (const prop in source) {
-    target[prop.startsWith('.') ? prop.substring(1) : prop] = source[prop];
-  }
-  return target;
-}
 class ContextFactory {
   constructor({ webXmlPath, contextXmlPath, envJsPath, ldapFactory }) {
     this.webXmlPath = webXmlPath || getDefaultWebXmlPath();
@@ -60,7 +26,7 @@ class ContextFactory {
   async build(options = {}) {
     const context = await this.buildContext(options);
     assignNotExisting(process.env, context);
-    await this.adoptEnv();
+    execJsFile(this.envJsPath);
     return context;
   }
   async getResourceResolver() {
@@ -92,20 +58,12 @@ class ContextFactory {
   async buildContext(options = {}) {
     const resourceResolver = await this.getResourceResolver();
     const ldapContext = readContext(this.webXmlPath, this.contextXmlPath);
-    await resolveEnv(ldapContext, resourceResolver);
+    await valueResolver(ldapContext, resourceResolver);
     debug('ldapContext = %o', ldapContext);
     this.ldapFactory.close();
     const context = options.keepDot ? ldapContext : removeDot(ldapContext);
     debug('context = %o', context);
     return context;
-  }
-
-  async adoptEnv() {
-    if (this.envJsPath && fs.existsSync(this.envJsPath)) {
-      //  await import(this.envJsPath);
-      const envJs = fs.readFileSync(this.envJsPath, 'utf8');
-      eval(envJs);
-    }
   }
 }
 
