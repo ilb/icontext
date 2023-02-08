@@ -1,6 +1,6 @@
 import PropertyReader from './PropertyReader.js';
 import ValueParser from './ValueParser.js';
-import xml2js from 'xml2js-es6-promise';
+import xml2js from './xml2js.cjs';
 
 class WebXmlReader extends PropertyReader {
   constructor(src, resourceResolver) {

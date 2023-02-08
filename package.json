@@ -17,9 +17,11 @@
   ],
   "dependencies": {
     "@ilb/node_ldap": "^1.0.17",
-    "xml2js-es6-promise": "^1.1.1"
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.3",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jest": "^25.2.2",
