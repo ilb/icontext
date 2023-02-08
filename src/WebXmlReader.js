@@ -1,7 +1,7 @@
 import { parseValue } from './ValueParser.cjs';
 import xml2js from './xml2js.cjs';
 
-async function parse(src, resourceResolver) {
+function parse(src) {
   const config = xml2js(src);
 
   if (!config['web-app']) {
@@ -15,11 +15,11 @@ async function parse(src, resourceResolver) {
     });
   }
 
-  if (config['web-app']['resource-env-ref'] && resourceResolver) {
+  if (config['web-app']['resource-env-ref']) {
     for (const resource of config['web-app']['resource-env-ref']) {
       const val = getResourceEntryValue(resource);
-      val.value = await resourceResolver(val.name);
-      result[val.name] = val.value;
+      //value will be filled later
+      result[val.name] = undefined;
     }
   }
   return result;
@@ -66,18 +66,14 @@ function getResourceEntryValue(resource) {
 }
 
 class WebXmlReader {
-  constructor(src, resourceResolver) {
+  constructor(src) {
     this.src = src;
     this.values = null;
-    if (resourceResolver && typeof resourceResolver !== 'function') {
-      throw new Error('resourceResolver should be function');
-    }
-    this.resourceResolver = resourceResolver;
   }
 
-  async getValues() {
+  getValues() {
     if (this.values === null) {
-      this.values = parse(this.src, this.resourceResolver);
+      this.values = parse(this.src);
     }
     return this.values;
   }

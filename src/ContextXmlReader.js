@@ -1,9 +1,7 @@
 import { parseValue } from './ValueParser.cjs';
 import xml2js from './xml2js.cjs';
 
-async function parse(src) {
-  //var xml2js = require('xml2js-es6-promise');
-
+function parse(src) {
   const sourceConfig = xml2js(src);
   const parsedConfig = {};
   if (sourceConfig.Context && sourceConfig.Context.Environment) {
@@ -52,7 +50,7 @@ class ContextXmlReader {
     this.values = null;
   }
 
-  async getValues() {
+  getValues() {
     if (this.values === null) {
       this.values = parse(this.src);
     }

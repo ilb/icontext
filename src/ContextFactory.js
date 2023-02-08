@@ -21,6 +21,21 @@ function assignExisting(target, source) {
 }
 
 /**
+ * resolve all undefined values with resolver function
+ * @param {*} values
+ * @param {*} resourceResolver
+ * @returns
+ */
+async function resolveEnv(values, resourceResolver) {
+  for (const prop in values) {
+    if (values[prop] === undefined) {
+      values[prop] = await resourceResolver(prop);
+    }
+  }
+  return values;
+}
+
+/**
  * copies all properties from source which does NOT exists in target
  * @param {*} target
  * @param {*} source
@@ -138,12 +153,14 @@ class ContextFactory {
       debug('ContextXmlReader = %o', values);
       assignExisting(ldapContext, values);
     }
+    await resolveEnv(ldapContext, resourceResolver);
     debug('ldapContext = %o', ldapContext);
     this.ldapFactory.close();
     const context = options.keepDot ? ldapContext : removeDot(ldapContext);
     debug('context = %o', context);
     return context;
   }
+
   async adoptEnv() {
     if (this.envJsPath && fs.existsSync(this.envJsPath)) {
       //  await import(this.envJsPath);
