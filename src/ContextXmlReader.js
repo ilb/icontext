@@ -1,10 +1,8 @@
-import PropertyReader from './PropertyReader.js';
 import { parseValue } from './ValueParser.cjs';
 import xml2js from './xml2js.cjs';
 
-class ContextXmlReader extends PropertyReader {
+class ContextXmlReader {
   constructor(src) {
-    super();
     this.src = src;
     this.values = null;
   }

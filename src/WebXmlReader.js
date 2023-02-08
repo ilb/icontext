@@ -1,10 +1,8 @@
-import PropertyReader from './PropertyReader.js';
 import { parseValue } from './ValueParser.cjs';
 import xml2js from './xml2js.cjs';
 
-class WebXmlReader extends PropertyReader {
+class WebXmlReader {
   constructor(src, resourceResolver) {
-    super();
     this.src = src;
     this.values = null;
     if (resourceResolver && typeof resourceResolver !== 'function') {
