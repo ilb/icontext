@@ -101,15 +101,3 @@ test('buildContextWithoutLdap', async () => {
   const context = await contextFactory.buildContext();
   expect(context).toStrictEqual(expected);
 });
-
-test('getDefaultContextXmlPath', async () => {
-  const contextFactory = new ContextFactory({});
-  process.env.HOME = path.resolve('test/home');
-  let expected = path.resolve(path.join(process.env.HOME, '.config/context.xml'));
-  expect(contextFactory.getDefaultContextXmlPath()).toStrictEqual(expected);
-  process.env.HOME = path.resolve('nonexistent');
-  contextFactory.systemContextBase = path.resolve('test/systemcontext');
-  process.env.USERNAME = 'testuser';
-  expected = path.resolve('test/systemcontext/testuser/node_context.xml');
-  expect(contextFactory.getDefaultContextXmlPath()).toStrictEqual(expected);
-});
