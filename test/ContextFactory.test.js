@@ -5,7 +5,7 @@ import LDAPFactory from '@ilb/node_ldap';
 process.env.LDAPPREFIX = 'ru.bystrobank';
 const ldapFactory = new LDAPFactory(process.env.LDAP_TEST_CONFIG);
 
-const ifldapcreonfigured = ldapFactory.isConfigured() ? describe : describe.skip;
+const ifldapconfigured = ldapFactory.isConfigured() ? describe : describe.skip;
 
 ifldapconfigured('ldap tests', () => {
   test('buildContext', async () => {
