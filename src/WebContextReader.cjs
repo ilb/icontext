@@ -12,9 +12,12 @@ function assignExisting(target, source) {
   for (const prop in source) {
     if (target[prop] !== undefined) {
       target[prop] = source[prop];
+    } else {
+      debug('property "%o" not defined, skipping', prop);
     }
   }
 }
+
 function readContext(webXmlPath, contextXmlPath) {
   const result = {};
   if (webXmlPath && fs.existsSync(webXmlPath)) {
