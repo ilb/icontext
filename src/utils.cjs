@@ -3,7 +3,7 @@ const fs = require('fs');
 function execJsFile(envJsPath) {
   if (envJsPath && fs.existsSync(envJsPath)) {
     //  await import(this.envJsPath);
-    const envJs = fs.readFileSync(this.envJsPath, 'utf8');
+    const envJs = fs.readFileSync(envJsPath, 'utf8');
     eval(envJs);
   }
 }
