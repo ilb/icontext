@@ -46,17 +46,16 @@ function getEnvEntryValue(entry) {
   return { type, name, value };
 }
 function getResourceEntryValue(resource) {
-  if (resource['resource-env-ref-type'] === undefined) {
-    throw new Error(
-      'incorrect resource: resource-env-ref-type required ' + JSON.stringify(resource)
-    );
+  let type = null;
+  if (resource['resource-env-ref-type']) {
+    type = resource['resource-env-ref-type'].toString().trim();
   }
   if (resource['resource-env-ref-name'] === undefined) {
     throw new Error(
       'incorrect resource: resource-env-ref-name required ' + JSON.stringify(resource)
     );
   }
-  const type = resource['resource-env-ref-type'].toString().trim();
+
   const name = resource['resource-env-ref-name'].toString().trim();
 
   if (name.length === 0) {
