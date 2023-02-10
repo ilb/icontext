@@ -10,7 +10,7 @@ const debug = createDebug('node_context');
  */
 function assignExisting(target, source) {
   for (const prop in source) {
-    if (target[prop] === undefined) {
+    if (target[prop] === undefined || target[prop] === null) {
       target[prop] = source[prop];
     } else {
       debug('property "%o" not defined, skipping', prop);
