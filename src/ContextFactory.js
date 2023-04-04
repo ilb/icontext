@@ -4,10 +4,10 @@ const {
   getDefaultEnvJsPath
 } = require('./defaults.js');
 const LDAPFactory = require('@ilb/node_ldap');
-const createDebug = require('debug');
 const { readContext } = require('./WebContextReader.js');
-const { execJsFile, assignNotExisting, valueResolver, removeDot } = require('./utils.js');
-
+const { execJsFile, assignNotExisting, removeDot } = require('./utils.js');
+const { ldapResolver } = require('./ldap.js');
+const createDebug = require('debug');
 const debug = createDebug('node_context');
 
 class ContextFactory {
@@ -29,26 +29,6 @@ class ContextFactory {
     execJsFile(this.envJsPath);
     return context;
   }
-  async getResourceResolver() {
-    if (!this.ldapFactory.isConfigured()) {
-      return () => '!LDAP not configured!';
-    }
-    const ldapResource = await this.ldapFactory.getLDAPResource();
-    const ldapPrefix = process.env.LDAPPREFIX || '';
-    debug('ldapPrefix = %s', ldapPrefix);
-
-    async function resourceResolver(name) {
-      if (ldapPrefix && name.startsWith('.')) {
-        name = ldapPrefix + name;
-      }
-      const value = await ldapResource.lookup(name);
-      debug('ldapResource.lookup(%s) = %s', name, value);
-      // console.log({ name, value });
-      return value;
-    }
-
-    return resourceResolver;
-  }
 
   /**
    * Method builds context with values read =require( web.xml and context.xml
@@ -56,9 +36,8 @@ class ContextFactory {
    * @returns {undefined}
    */
   async buildContext(options = {}) {
-    const resourceResolver = await this.getResourceResolver();
     const ldapContext = readContext(this.webXmlPath, this.contextXmlPath);
-    await valueResolver(ldapContext, resourceResolver);
+    await ldapResolver(ldapContext, this.ldapFactory);
     debug('ldapContext = %o', ldapContext);
     this.ldapFactory.close();
     const context = options.keepDot ? ldapContext : removeDot(ldapContext);

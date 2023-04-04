@@ -9,20 +9,6 @@ function execJsFile(envJsPath) {
 }
 
 /**
- * resolve all undefined values with resolver function
- * @param {*} values
- * @param {*} resourceResolver
- * @returns
- */
-async function valueResolver(values, resourceResolver) {
-  for (const prop in values) {
-    if (values[prop] === undefined) {
-      values[prop] = await resourceResolver(prop);
-    }
-  }
-  return values;
-}
-/**
  * copies all properties from source which does NOT exists in target
  * @param {*} target
  * @param {*} source
@@ -41,4 +27,4 @@ function removeDot(source) {
   }
   return target;
 }
-module.exports = { execJsFile, assignNotExisting, valueResolver, removeDot };
+module.exports = { execJsFile, assignNotExisting, removeDot };
