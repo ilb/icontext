@@ -9,6 +9,7 @@ const ifldapconfigured = ldapFactory.isConfigured() ? describe : describe.skip;
 
 ifldapconfigured('ldap tests', () => {
   test('buildContext', async () => {
+    const ldapFactory = new LDAPFactory('test/ldap.conf');
     const webXmlPath = path.resolve('test/web.xml');
     const contextXmlPath = path.resolve('test/context.xml');
     const envJsPath = path.resolve('test/.env.js');
@@ -58,6 +59,7 @@ ifldapconfigured('ldap tests', () => {
     expect(context).toStrictEqual(expected);
   });
   test('build', async () => {
+    const ldapFactory = new LDAPFactory('test/ldap.conf');
     const webXmlPath = path.resolve('test/web.xml');
     const contextXmlPath = path.resolve('test/context.xml');
     process.env['apps.testapp2.db'] = 'postgresql://localhost/testapp2';
