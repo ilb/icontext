@@ -1,12 +1,12 @@
-import {
+const {
   getDefaultWebXmlPath,
   getDefaultContextXmlPath,
   getDefaultEnvJsPath
-} from './defaults.cjs';
-import LDAPFactory from '@ilb/node_ldap';
-import createDebug from 'debug';
-import { readContext } from './WebContextReader.cjs';
-import { execJsFile, assignNotExisting, valueResolver, removeDot } from './utils.cjs';
+} = require('./defaults.js');
+const LDAPFactory = require('@ilb/node_ldap');
+const createDebug = require('debug');
+const { readContext } = require('./WebContextReader.js');
+const { execJsFile, assignNotExisting, valueResolver, removeDot } = require('./utils.js');
 
 const debug = createDebug('node_context');
 
@@ -51,7 +51,7 @@ class ContextFactory {
   }
 
   /**
-   * Method builds context with values read from web.xml and context.xml
+   * Method builds context with values read =require( web.xml and context.xml
    * context.xml values have higher priority
    * @returns {undefined}
    */
@@ -67,4 +67,4 @@ class ContextFactory {
   }
 }
 
-export default ContextFactory;
+module.exports = ContextFactory;

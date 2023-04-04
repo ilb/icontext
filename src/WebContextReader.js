@@ -1,6 +1,6 @@
 const fs = require('fs');
-const { parseWebXml } = require('./WebXmlReader.cjs');
-const { parseContextXml } = require('./ContextXmlReader.cjs');
+const { parseWebXml } = require('./WebXmlReader.js');
+const { parseContextXml } = require('./ContextXmlReader.js');
 const createDebug = require('debug');
 const debug = createDebug('node_context');
 /**

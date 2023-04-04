@@ -1,9 +1,9 @@
-import ContextFactory from '../src/ContextFactory';
-import path from 'path';
-import LDAPFactory from '@ilb/node_ldap';
+const ContextFactory = require('../src/ContextFactory.js');
+const path = require('path');
+const LDAPFactory = require('@ilb/node_ldap');
 
-process.env.LDAPPREFIX = 'ru.bystrobank';
-const ldapFactory = new LDAPFactory(process.env.LDAP_TEST_CONFIG);
+process.env.LDAPPREFIX = 'com.iconicompany';
+const ldapFactory = new LDAPFactory('test/ldap.conf');
 
 const ifldapconfigured = ldapFactory.isConfigured() ? describe : describe.skip;
 
@@ -25,7 +25,7 @@ ifldapconfigured('ldap tests', () => {
       'apps.testapp.db_PASSWORD': 'db_password_here',
       'apps.testapp.certfile': '/etc/certs/testapp.pem',
       'apps.testapp.cert_PASSWORD': 'cert_pass_here',
-      'ru.bystrobank.apps.workflow.ws': 'https://devel.net.ilb.ru/workflow-web/web'
+      'com.iconicompany.apps.testapp.ws': 'http://localhost/testapp'
     };
     expect(context).toStrictEqual(expected);
   });
@@ -53,7 +53,7 @@ ifldapconfigured('ldap tests', () => {
       'apps.testapp.db_PASSWORD': 'db_password_here',
       'apps.testapp.certfile': '/etc/certs/testapp.pem',
       'apps.testapp.cert_PASSWORD': 'cert_pass_here',
-      'ru.bystrobank.apps.workflow.ws': 'https://devel.net.ilb.ru/workflow-web/web'
+      'com.iconicompany.apps.testapp.ws': 'http://localhost/testapp'
     };
     expect(context).toStrictEqual(expected);
   });
@@ -95,7 +95,7 @@ test('buildContextWithoutLdap', async () => {
     'apps.testapp.db_PASSWORD': 'db_password_here',
     'apps.testapp.certfile': '/etc/certs/testapp.pem',
     'apps.testapp.cert_PASSWORD': 'cert_pass_here',
-    'ru.bystrobank.apps.workflow.ws': '!LDAP not configured!'
+    'com.iconicompany.apps.testapp.ws': '!LDAP not configured!'
   };
 
   const context = await contextFactory.buildContext();

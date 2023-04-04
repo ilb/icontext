@@ -1,5 +1,5 @@
-import defaults from '../src/defaults.cjs';
-import * as path from 'path';
+const defaults = require('../src/defaults.js');
+const path = require('path');
 
 test('getDefaultContextXmlPath', async () => {
   process.env.HOME = path.resolve('test/home');

@@ -33,7 +33,7 @@
   </env-entry>
 
   <resource-env-ref>
-    <description>Сервисы workflow</description>
-    <resource-env-ref-name>ru.bystrobank.apps.workflow.ws</resource-env-ref-name>
+    <description>Сервисы testapp</description>
+    <resource-env-ref-name>com.iconicompany.apps.testapp.ws</resource-env-ref-name>
   </resource-env-ref>
 </web-app>

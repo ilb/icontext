@@ -2,9 +2,9 @@ const {
   getDefaultWebXmlPath,
   getDefaultContextXmlPath,
   getDefaultEnvJsPath
-} = require('./defaults.cjs');
-const { readContext } = require('./WebContextReader.cjs');
-const { execJsFile, assignNotExisting } = require('./utils.cjs');
+} = require('./defaults.js');
+const { readContext } = require('./WebContextReader.js');
+const { execJsFile, assignNotExisting } = require('./utils.js');
 
 const webXmlPath = getDefaultWebXmlPath();
 const contextXmlPath = getDefaultContextXmlPath();

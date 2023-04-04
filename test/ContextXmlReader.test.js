@@ -1,7 +1,6 @@
-import { parseContextXml } from '../src/ContextXmlReader.cjs';
-import * as path from 'path';
-import * as fs from 'fs';
-
+const { parseContextXml } = require('../src/ContextXmlReader.js');
+const path = require('path');
+const fs = require('fs');
 test('parses context.xml', async () => {
   const contextPath = path.resolve('test/context.xml');
 

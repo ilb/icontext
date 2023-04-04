@@ -1,8 +1,6 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
-
-export default {
+module.exports = {
   testEnvironment: 'jest-environment-node',
-  transform: {},
-  setupFiles: ['dotenv/config']
+  transform: {}
 };

@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@ilb/node_ldap': ^1.0.17
+  '@ilb/node_ldap': ^1.1.0
   debug: ^4.3.4
   dotenv: ^16.0.3
   eslint: ^8.0.1
@@ -13,7 +13,7 @@ specifiers:
   xml2js: ^0.4.23
 
 dependencies:
-  '@ilb/node_ldap': 1.0.17
+  '@ilb/node_ldap': 1.1.0
   xml2js: 0.4.23
 
 devDependencies:
@@ -395,10 +395,13 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@ilb/node_ldap/1.0.17:
-    resolution: {integrity: sha512-/FoNhJiLqO8VRvhcVSsSGvKxJ2cojAenUYJfQg83wPbEglm1zgJBlkGKpsS8h06Ng7PIYUILG8MzEEEtCMrGNw==}
+  /@ilb/node_ldap/1.1.0:
+    resolution: {integrity: sha512-2YUGBDbytSw2NcQ4tbuSDGUFX+sOu62gqnmp23526emOCFLXjSHO3cTltKpO6iMGOJr+K1a/yE9+jGBSFMp0BA==}
     dependencies:
+      debug: 4.3.4
       ldapjs-client: 0.1.1
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /@istanbuljs/load-nyc-config/1.1.0:
@@ -1225,7 +1228,6 @@ packages:
         optional: true
     dependencies:
       ms: 2.1.2
-    dev: true
 
   /decimal.js/10.4.3:
     resolution: {integrity: sha512-VBBaLc1MgL5XpzgIP7ny5Z6Nx3UrRkIViUkPUdtl9aya5amy3De1gsUUSB1g3+3sExYNjCAsAznmukyxCb1GRA==}
@@ -2620,7 +2622,6 @@ packages:
 
   /ms/2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
-    dev: true
 
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
