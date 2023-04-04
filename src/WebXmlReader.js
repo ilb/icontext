@@ -1,5 +1,5 @@
 const { parseValue } = require('./ValueParser.js');
-const { xml2jswrapper } = require('./xml2jswrapper.js');
+const { xml2jswrapper } = require('./xml2jswrapper.cjs');
 
 function parseWebXml(src) {
   const config = xml2jswrapper(src);
