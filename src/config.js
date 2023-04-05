@@ -1,3 +1,4 @@
 const { buildContextSync } = require('./context');
 
-buildContextSync();
+const context = buildContextSync();
+Object.assign(process.env, context);

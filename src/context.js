@@ -6,7 +6,7 @@ const ContextFactory = require('./ContextFactory.js');
  */
 async function buildContext() {
   const contextFactory = new ContextFactory();
-  await contextFactory.buildContext();
+  return await contextFactory.buildContext();
 }
 
 /**
@@ -18,6 +18,7 @@ function buildContextSync() {
   if (error) {
     throw error;
   }
+  // console.log(stdout.toString());
   const context = JSON.parse(stdout);
   return context;
 }

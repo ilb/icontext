@@ -11,15 +11,16 @@ class ContextFactory {
     this.webXmlPath = webXmlPath || getDefaultWebXmlPath();
     this.contextXmlPath = contextXmlPath || getDefaultContextXmlPath();
     this.ldapFactory = ldapFactory || new LDAPFactory();
+    debug('webXmlPath', webXmlPath, 'contextXmlPath', contextXmlPath);
   }
 
   /**
    * Method populates process.env
    * @returns {undefined}pop
    */
-  async build(options = {}) {
-    const context = await this.buildContext(options);
-    assignNotExisting(process.env, context);
+  async build() {
+    const context = await this.buildContext();
+    Object.assign(process.env, context);
     return context;
   }
 
@@ -35,7 +36,7 @@ class ContextFactory {
     debug('ldap context', context);
     valueResolver(context);
     debug('resolved context', context);
-    return removeDot(context);
+    return context;
   }
 }
 
@@ -54,23 +55,5 @@ async function valueResolver(values) {
   }
   return values;
 }
-/**
- * copies all properties from source which does NOT exists in target
- * @param {*} target
- * @param {*} source
- */
-function assignNotExisting(target, source) {
-  for (const prop in source) {
-    if (target[prop] === undefined) {
-      target[prop] = source[prop];
-    }
-  }
-}
-function removeDot(source) {
-  const target = {};
-  for (const prop in source) {
-    target[prop.startsWith('.') ? prop.substring(1) : prop] = source[prop];
-  }
-  return target;
-}
+
 module.exports = ContextFactory;
