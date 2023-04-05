@@ -2,7 +2,7 @@
 <web-app version="3.1" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
   <env-entry>
     <description>база данных откуда берем данные</description>
-    <env-entry-name>.apps.testapp.db</env-entry-name>
+    <env-entry-name>apps.testapp.db</env-entry-name>
     <env-entry-type>java.lang.String</env-entry-type>
     <env-entry-value>mysql://localhost/testapp</env-entry-value>
   </env-entry>

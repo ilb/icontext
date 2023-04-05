@@ -17,9 +17,12 @@ function parseWebXml(src) {
 
   if (config['web-app']['resource-env-ref']) {
     for (const resource of config['web-app']['resource-env-ref']) {
-      const val = getResourceEntryValue(resource);
+      let { name } = getResourceEntryValue(resource);
+      if (name.startsWith('.')) {
+        name = name.substring(1);
+      }
       //value will be filled later
-      result[val.name] = undefined;
+      result[name] = undefined;
     }
   }
   return result;

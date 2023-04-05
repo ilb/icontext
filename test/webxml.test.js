@@ -6,12 +6,13 @@ const contextPath = path.resolve('test/web.xml');
 
 test('parses context.xml', async () => {
   const expected = {
-    '.apps.testapp.db': 'mysql://localhost/testapp',
-    '.apps.testapp2.db': null,
+    'apps.testapp.ws': undefined,
+    'apps.testapp.db': undefined,
     'apps.testapp.db_PASSWORD': null,
+    'apps.testapp.db_user': 'testapp',
+    DATABASE_URL: expect.anything(),
     'apps.testapp.certfile': '/etc/certs/testapp.pem',
-    'apps.testapp.cert_PASSWORD': null,
-    'com.iconicompany.apps.testapp.ws': undefined
+    'apps.testapp.cert_PASSWORD': null
   };
   const webxml = fs.readFileSync(contextPath);
   const values = parseWebXml(webxml);

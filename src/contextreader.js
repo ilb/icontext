@@ -3,35 +3,28 @@ const { parseWebXml } = require('./webxml.js');
 const { parseContextXml } = require('./contextxml.js');
 const createDebug = require('debug');
 const debug = createDebug('node_context');
-/**
- * copies all properties from source which exists in target
- * @param {*} target
- * @param {*} source
- */
-function assignExisting(target, source) {
-  for (const prop in source) {
-    if (target[prop] !== undefined) {
-      target[prop] = source[prop];
-    } else {
-      debug('property "%o" not defined, skipping', prop);
-    }
-  }
-}
 
 function readContext(webXmlPath, contextXmlPath) {
   const result = {};
   if (webXmlPath && fs.existsSync(webXmlPath)) {
-    const webxml = fs.readFileSync(webXmlPath, 'utf8');
-    const values = parseWebXml(webxml);
-    debug('WebXmlReader = %o', values);
-    Object.assign(result, values);
-  }
+    const webValues = parseWebXml(fs.readFileSync(webXmlPath, 'utf8'));
+    debug('web.xml', webValues);
+    Object.assign(result, webValues);
 
-  if (contextXmlPath && fs.existsSync(contextXmlPath)) {
-    const contextXml = fs.readFileSync(contextXmlPath, 'utf8');
-    const values = parseContextXml(contextXml);
-    debug('ContextXmlReader = %o', values);
-    assignExisting(result, values);
+    let contextValues = {};
+    if (contextXmlPath && fs.existsSync(contextXmlPath)) {
+      contextValues = parseContextXml(fs.readFileSync(contextXmlPath, 'utf8'));
+      debug('context.xml', contextValues);
+    }
+    for (const key in result) {
+      if (process.env[key]) {
+        debug('value from ENV[%o]=%o', key, process.env[key]);
+        result[key] = process.env[key];
+      } else if (contextValues[key]) {
+        debug('value from CONTEXT[%o]=%o', key, contextValues[key]);
+        result[key] = contextValues[key];
+      }
+    }
   }
   return result;
 }

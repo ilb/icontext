@@ -1,24 +1,30 @@
-const { getDefaultWebXmlPath, getDefaultContextXmlPath } = require('./defaults.js');
-const { readContext } = require('./contextreader.js');
-const { ldapResolver } = require('./ldap.js');
-const { removeDot } = require('./utils.js');
-const createDebug = require('debug');
-const debug = createDebug('node_context');
+const { spawnSync } = require('child_process');
+const ContextFactory = require('./ContextFactory.js');
 
-const LDAPFactory = require('@ilb/node_ldap');
-
-async function buildContext({ webXmlPath, contextXmlPath, ldapFactory } = {}) {
-  if (!ldapFactory) {
-    ldapFactory = new LDAPFactory();
-  }
-
-  webXmlPath = webXmlPath || getDefaultWebXmlPath();
-  contextXmlPath = contextXmlPath || getDefaultContextXmlPath();
-  const context = readContext(webXmlPath, contextXmlPath);
-  await ldapResolver(context, ldapFactory);
-  ldapFactory.close();
-  debug('context = %o', context);
-  return removeDot(context);
+/**
+ * asynchronous buildContext
+ */
+async function buildContext() {
+  const contextFactory = new ContextFactory();
+  await contextFactory.buildContext();
 }
 
-module.exports = { buildContext };
+/**
+ * synchronous wrapper
+ * @returns
+ */
+function buildContextSync() {
+  const { error, stdout } = spawnSync(process.execPath, [__filename]);
+  if (error) {
+    throw error;
+  }
+  const context = JSON.parse(stdout);
+  return context;
+}
+
+/**code runs in spawnSync */
+if (process.argv[1] == __filename) {
+  buildContext().then(JSON.stringify).then(console.log);
+}
+
+module.exports = { buildContext, buildContextSync };

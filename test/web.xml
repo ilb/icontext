@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-  <env-entry>
-    <description>база данных откуда берем данные</description>
-    <env-entry-name>.apps.testapp.db</env-entry-name>
-    <env-entry-type>java.lang.String</env-entry-type>
-    <env-entry-value>mysql://localhost/testapp</env-entry-value>
-  </env-entry>
-  <env-entry>
-    <description>база данных откуда берем данные 2</description>
-    <env-entry-name>.apps.testapp2.db</env-entry-name>
-    <env-entry-type>java.lang.String</env-entry-type>
-  </env-entry>
+  <resource-env-ref>
+    <description>БД testapp</description>
+    <resource-env-ref-name>apps.testapp.db</resource-env-ref-name>
+  </resource-env-ref>
+  <resource-env-ref>
+    <description>URL testapp</description>
+    <resource-env-ref-name>apps.testapp.ws</resource-env-ref-name>
+  </resource-env-ref>
+
   <env-entry>
     <description>пароль БД</description>
     <env-entry-name>apps.testapp.db_PASSWORD</env-entry-name>
     <env-entry-type>java.lang.String</env-entry-type>
     <!-- значение не указываем - получим его из окружения -->
   </env-entry>
-  <!-- <env-entry>
+  <env-entry>
     <description>пользователь БД</description>
     <env-entry-name>apps.testapp.db_user</env-entry-name>
     <env-entry-type>java.lang.String</env-entry-type>
@@ -28,7 +26,7 @@
     <env-entry-name>DATABASE_URL</env-entry-name>
     <env-entry-type>java.net.URL</env-entry-type>
     <env-entry-value>${apps.testapp.db_user}:${apps.testapp.db_PASSWORD}@${apps.testapp.db}</env-entry-value>
-  </env-entry> -->
+  </env-entry>
   <env-entry>
     <description>файл с сертификатом, который будем использовать для аутентификации в других ресурсах</description>
     <env-entry-name>apps.testapp.certfile</env-entry-name>
@@ -44,8 +42,4 @@
     <!-- значение не указываем - получим его из окружения -->
   </env-entry>
 
-  <resource-env-ref>
-    <description>Сервисы testapp</description>
-    <resource-env-ref-name>com.iconicompany.apps.testapp.ws</resource-env-ref-name>
-  </resource-env-ref>
 </web-app>
