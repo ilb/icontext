@@ -28,26 +28,8 @@ function getDefaultContextXmlPath(systemContextBase = '/etc/nodejs/context') {
   }
   return contextXmlPath;
 }
-function getDefaultEnvJsPath() {
-  if (process.env.CONTEXT_ENVJS) {
-    return process.env.CONTEXT_ENVJS;
-  }
-  let envJsPath = path.resolve(process.cwd(), '.env.mjs');
-  let envJsPathExists = fs.existsSync(envJsPath);
-  debug('envJsPath = %s, exists = %o', envJsPath, envJsPathExists);
-  if (!envJsPathExists) {
-    envJsPath = path.resolve(process.cwd(), '.env.js');
-    envJsPathExists = fs.existsSync(envJsPath);
-    debug('envJsPath = %s, exists = %o', envJsPath, envJsPathExists);
-    if (!envJsPathExists) {
-      envJsPath = null;
-    }
-  }
-  return envJsPath;
-}
 
 module.exports = {
   getDefaultWebXmlPath,
-  getDefaultContextXmlPath,
-  getDefaultEnvJsPath
+  getDefaultContextXmlPath
 };

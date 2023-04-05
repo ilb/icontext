@@ -34,11 +34,9 @@ test('buildContext', async () => {
   const ldapFactory = new LDAPFactory('test/ldap.conf');
   const webXmlPath = path.resolve('test/web.xml');
   const contextXmlPath = path.resolve('test/context.xml');
-  const envJsPath = path.resolve('test/.env.js');
   const contextFactory = new ContextFactory({
     webXmlPath,
     contextXmlPath,
-    envJsPath,
     ldapFactory
   });
   const context = await contextFactory.buildContext();
@@ -73,11 +71,9 @@ test('build', async () => {
   const webXmlPath = path.resolve('test/web.xml');
   const contextXmlPath = path.resolve('test/context.xml');
   process.env['apps.testapp2.db'] = 'postgresql://localhost/testapp2';
-  const envJsPath = path.resolve('test/.env.js');
   const contextFactory = new ContextFactory({
     webXmlPath,
     contextXmlPath,
-    envJsPath,
     ldapFactory
   });
   await contextFactory.build();
