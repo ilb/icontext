@@ -1,28 +1,22 @@
-function parseValue(type, rawValue) {
-  let value = null;
-  if (rawValue !== null) {
-    switch (type) {
-      case 'java.lang.String':
-      case 'javax.jms.Queue':
-        value = rawValue;
-        break;
-      case 'java.lang.Boolean':
-        if (['true', 'false'].indexOf(rawValue) === -1) {
-          throw new Error(`value = ${rawValue} for Boolean invalid`);
-        }
-        value = rawValue === 'true';
-        break;
-      case 'java.lang.Integer':
-      case 'java.lang.Float':
-        value = Number(rawValue);
-        break;
-      default:
-        throw new Error(
-          `Type ${type} unsupported. Suppported types: java.lang.String, java.lang.Boolean, java.lang.Integer, java.lang.Float`
-        );
-    }
+const PARSERS = {
+  'java.lang.String': (value) => value,
+  'javax.jms.Queue': (value) => value,
+  'java.lang.Boolean': parseBoolean,
+  'java.lang.Integer': (value) => Number(value),
+  'java.lang.Float': (value) => Number(value)
+};
+
+function parseBoolean(value) {
+  if (['true', 'false'].indexOf(value) === -1) {
+    throw new Error(`value = ${value} for Boolean invalid`);
   }
-  return value;
+  return value === 'true';
+}
+function parseValue(type, value) {
+  if (PARSERS[type]) {
+    return PARSERS[type](value);
+  }
+  throw new Error(`Type ${type} unsupported. Suppported types: ${Object.keys(PARSERS)}`);
 }
 
 module.exports = { parseValue };
