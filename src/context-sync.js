@@ -1,23 +1,22 @@
-const { context } = require('./context-sync.js');
+const { buildContext } = require('./context.js');
 const { spawnSync } = require('child_process');
 
 /**
  * synchronous wrapper
  * @returns
  */
-function contextSync() {
+function buildContextSync() {
   const { error, stdout } = spawnSync(process.execPath, [__filename]);
   if (error) {
     throw error;
   }
-  // console.log(stdout.toString(), 'zzz');
   const context = JSON.parse(stdout);
   return context;
 }
 
-module.exports = { contextSync };
+/**code runs in spawnSync */
 if (process.argv[1] == __filename) {
-  // console.log(process.argv[1]);
-
-  context().then(JSON.stringify).then(console.log);
+  buildContext().then(JSON.stringify).then(console.log);
 }
+
+module.exports = { buildContextSync };

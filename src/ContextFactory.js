@@ -1,5 +1,5 @@
 const { execJsFile, assignNotExisting } = require('./utils.js');
-const { context } = require('./context');
+const { buildContext } = require('./context');
 const createDebug = require('debug');
 const debug = createDebug('node_context');
 
@@ -26,7 +26,7 @@ class ContextFactory {
    * @returns {undefined}
    */
   async buildContext() {
-    return context(this.options);
+    return buildContext(this.options);
   }
 }
 

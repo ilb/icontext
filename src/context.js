@@ -7,7 +7,7 @@ const debug = createDebug('node_context');
 
 const LDAPFactory = require('@ilb/node_ldap');
 
-async function context({ webXmlPath, contextXmlPath, ldapFactory } = {}) {
+async function buildContext({ webXmlPath, contextXmlPath, ldapFactory } = {}) {
   if (!ldapFactory) {
     ldapFactory = new LDAPFactory();
   }
@@ -21,4 +21,4 @@ async function context({ webXmlPath, contextXmlPath, ldapFactory } = {}) {
   return removeDot(context);
 }
 
-module.exports = { context };
+module.exports = { buildContext };

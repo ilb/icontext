@@ -1,7 +1,6 @@
-const { contextSync } = require('./context-sync.js');
+const { buildContextSync } = require('./context-sync.js');
 const { execJsFile, assignNotExisting } = require('./utils.js');
 
-const context = contextSync();
+const context = buildContextSync();
 assignNotExisting(process.env, context);
 execJsFile(this.envJsPath);
-console.log(context);
