@@ -12,11 +12,23 @@
     <env-entry-type>java.lang.String</env-entry-type>
   </env-entry>
   <env-entry>
-    <description>пароль чтоб в базу мускульную ходить</description>
+    <description>пароль БД</description>
     <env-entry-name>apps.testapp.db_PASSWORD</env-entry-name>
     <env-entry-type>java.lang.String</env-entry-type>
     <!-- значение не указываем - получим его из окружения -->
   </env-entry>
+  <!-- <env-entry>
+    <description>пользователь БД</description>
+    <env-entry-name>apps.testapp.db_user</env-entry-name>
+    <env-entry-type>java.lang.String</env-entry-type>
+    <env-entry-value>testapp</env-entry-value>
+  </env-entry>
+  <env-entry>
+    <description>настрока БД для prisma</description>
+    <env-entry-name>DATABASE_URL</env-entry-name>
+    <env-entry-type>java.net.URL</env-entry-type>
+    <env-entry-value>${apps.testapp.db_user}:${apps.testapp.db_PASSWORD}@${apps.testapp.db}</env-entry-value>
+  </env-entry> -->
   <env-entry>
     <description>файл с сертификатом, который будем использовать для аутентификации в других ресурсах</description>
     <env-entry-name>apps.testapp.certfile</env-entry-name>

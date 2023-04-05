@@ -1,10 +1,7 @@
-const LDAPFactory = require('@ilb/node_ldap');
-
 const createDebug = require('debug');
 const debug = createDebug('node_context');
 
 async function getResourceResolver(ldapFactory) {
-  ldapFactory = ldapFactory || new LDAPFactory();
   if (!ldapFactory.isConfigured()) {
     return () => '!LDAP not configured!';
   }
@@ -48,6 +45,7 @@ async function valueResolver(values, resourceResolver) {
 async function ldapResolver(values, ldapFactory) {
   const resourceResolver = await getResourceResolver(ldapFactory);
   await valueResolver(values, resourceResolver);
+  return values;
 }
 
 module.exports = { getResourceResolver, valueResolver, ldapResolver };

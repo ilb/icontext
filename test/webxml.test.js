@@ -1,4 +1,4 @@
-const { parseWebXml } = require('../src/WebXmlReader.js');
+const { parseWebXml } = require('../src/webxml.js');
 const fs = require('fs');
 const path = require('path');
 

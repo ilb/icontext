@@ -1,4 +1,4 @@
-const { parseValue } = require('./ValueParser.js');
+const { parseValue } = require('./parser.js');
 const { xml2jswrapper } = require('./xml2jswrapper.cjs');
 
 function parseWebXml(src) {

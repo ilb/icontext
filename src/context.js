@@ -1,21 +1,24 @@
-const {
-  getDefaultWebXmlPath,
-  getDefaultContextXmlPath,
-  getDefaultEnvJsPath
-} = require('./defaults.js');
-const { readContext } = require('./WebContextReader.js');
-const { execJsFile, assignNotExisting } = require('./utils.js');
+const { getDefaultWebXmlPath, getDefaultContextXmlPath } = require('./defaults.js');
+const { readContext } = require('./contextreader.js');
 const { ldapResolver } = require('./ldap.js');
+const { removeDot } = require('./utils.js');
+const createDebug = require('debug');
+const debug = createDebug('node_context');
 
-async function main() {
-  const webXmlPath = getDefaultWebXmlPath();
-  const contextXmlPath = getDefaultContextXmlPath();
-  const envJsPath = getDefaultEnvJsPath();
+const LDAPFactory = require('@ilb/node_ldap');
+
+async function context({ webXmlPath, contextXmlPath, ldapFactory } = {}) {
+  if (!ldapFactory) {
+    ldapFactory = new LDAPFactory();
+  }
+
+  webXmlPath = webXmlPath || getDefaultWebXmlPath();
+  contextXmlPath = contextXmlPath || getDefaultContextXmlPath();
   const context = readContext(webXmlPath, contextXmlPath);
-  await ldapResolver(context);
-
-  assignNotExisting(process.env, context);
-  execJsFile(envJsPath);
+  await ldapResolver(context, ldapFactory);
+  ldapFactory.close();
+  debug('context = %o', context);
+  return removeDot(context);
 }
 
-main().then();
+module.exports = { context };

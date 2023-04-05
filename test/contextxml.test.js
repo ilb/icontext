@@ -1,4 +1,4 @@
-const { parseContextXml } = require('../src/ContextXmlReader.js');
+const { parseContextXml } = require('../src/contextxml.js');
 const path = require('path');
 const fs = require('fs');
 test('parses context.xml', async () => {
