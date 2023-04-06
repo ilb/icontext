@@ -15,7 +15,7 @@
     "src"
   ],
   "dependencies": {
-    "@ilb/node_ldap": "^1.1.0",
+    "@ilb/node_ldap": "1.1.1",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {

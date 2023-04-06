@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@ilb/node_ldap': ^1.1.0
+  '@ilb/node_ldap': 1.1.1
   debug: ^4.3.4
   dotenv: ^16.0.3
   eslint: ^8.0.1
@@ -13,7 +13,7 @@ specifiers:
   xml2js: ^0.4.23
 
 dependencies:
-  '@ilb/node_ldap': 1.1.0
+  '@ilb/node_ldap': 1.1.1
   xml2js: 0.4.23
 
 devDependencies:
@@ -405,8 +405,8 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@ilb/node_ldap/1.1.0:
-    resolution: {integrity: sha512-2YUGBDbytSw2NcQ4tbuSDGUFX+sOu62gqnmp23526emOCFLXjSHO3cTltKpO6iMGOJr+K1a/yE9+jGBSFMp0BA==}
+  /@ilb/node_ldap/1.1.1:
+    resolution: {integrity: sha512-Gx4egQZlkupsKs7gyZW/BSbeFtFn5qDNiHhoFanVa9GFfmgToG7MMZ/+7HIJAyPNsDLIgAJrokFnu75vBxdDpw==}
     dependencies:
       debug: 4.3.4
       ldapjs-client: 0.1.1

@@ -2,11 +2,11 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
   <resource-env-ref>
     <description>БД testapp</description>
-    <resource-env-ref-name>apps.testapp.db</resource-env-ref-name>
+    <resource-env-ref-name>.apps.testapp.db</resource-env-ref-name>
   </resource-env-ref>
   <resource-env-ref>
     <description>URL testapp</description>
-    <resource-env-ref-name>apps.testapp.ws</resource-env-ref-name>
+    <resource-env-ref-name>.apps.testapp.ws</resource-env-ref-name>
     <lookup-name>LDAPPREFIX</lookup-name>
   </resource-env-ref>
 

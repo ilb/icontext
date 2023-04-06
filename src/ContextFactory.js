@@ -11,7 +11,7 @@ class ContextFactory {
     this.webXmlPath = webXmlPath || getDefaultWebXmlPath();
     this.contextXmlPath = contextXmlPath || getDefaultContextXmlPath();
     this.ldapFactory = ldapFactory || new LDAPFactory();
-    debug('webXmlPath', webXmlPath, 'contextXmlPath', contextXmlPath);
+    debug('webXmlPath:', this.webXmlPath, 'contextXmlPath:', this.contextXmlPath);
   }
 
   /**
@@ -37,6 +37,9 @@ class ContextFactory {
     valueResolver(context);
     debug('resolved context', context);
     return context;
+  }
+  close() {
+    this.ldapFactory.close();
   }
 }
 
