@@ -4,8 +4,8 @@ const ContextFactory = require('./ContextFactory.js');
 /**
  * asynchronous buildContext
  */
-async function buildContext() {
-  const contextFactory = new ContextFactory();
+async function buildContext(options) {
+  const contextFactory = new ContextFactory(options);
   return await contextFactory.buildContext();
 }
 
@@ -14,17 +14,23 @@ async function buildContext() {
  * @returns
  */
 function buildContextSync() {
-  const { error, stdout } = spawnSync(process.execPath, [__filename]);
-  if (error) {
-    throw error;
+  const res = spawnSync(process.execPath, [__filename], { env: process.env });
+  if (res.error) {
+    throw res.error;
   }
-  // console.log(stdout.toString());
-  const context = JSON.parse(stdout);
+  if (res.status !== 0) {
+    throw new Error(res.stderr.toString());
+  }
+  // console.log(res.stdout.toString());
+  // console.log(res.stderr.toString());
+
+  const context = JSON.parse(res.stdout);
   return context;
 }
 
 /**code runs in spawnSync */
 if (process.argv[1] == __filename) {
+  // console.log(process.env.CONTEXT_WEBXML);
   buildContext().then(JSON.stringify).then(console.log);
 }
 

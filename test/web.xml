@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.1" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
   <resource-env-ref>
     <description>БД testapp</description>
     <resource-env-ref-name>apps.testapp.db</resource-env-ref-name>
@@ -7,6 +7,7 @@
   <resource-env-ref>
     <description>URL testapp</description>
     <resource-env-ref-name>apps.testapp.ws</resource-env-ref-name>
+    <lookup-name>LDAPPREFIX</lookup-name>
   </resource-env-ref>
 
   <env-entry>

@@ -6,7 +6,7 @@
   "license": "ISC",
   "main": "src/ContextFactory.js",
   "scripts": {
-    "test": "node --use-openssl-ca --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --detectOpenHandles"
+    "test": "node --use-openssl-ca node_modules/jest/bin/jest.js --runInBand"
   },
   "browser": {
     "fs": false
