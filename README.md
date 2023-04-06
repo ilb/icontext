@@ -11,7 +11,7 @@ await contextFactory.build(); // per request
 
 ## Sync call on application start
 
-Add to script or next.config.js:
+Add to script or `next.config.js`:
 
 ```javascript
 const { buildContextSync } = require('icontext');
