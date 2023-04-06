@@ -60,12 +60,22 @@ test('buildContext2', async () => {
   const contextFactory = new ContextFactory({ webXmlPath, contextXmlPath, ldapFactory });
   const context = await contextFactory.buildContext();
   ldapFactory.close();
-
   const expected = {
-    'apps.testapp.db': 'mysql://localhost/testapp'
+    'apps.testapp.db': 'mysql://localhost/testapp',
+    'apps.testapp.fix': null
   };
   expect(context).toStrictEqual(expected);
 });
+
+test('buildContext3', async () => {
+  const ldapFactory = new LDAPFactory('test/ldap.conf');
+  const webXmlPath = path.resolve('test/web3.xml');
+  const contextXmlPath = path.resolve('test/context.xml');
+  const contextFactory = new ContextFactory({ webXmlPath, contextXmlPath, ldapFactory });
+  await expect(contextFactory.buildContext()).rejects.toThrow('Boolean invalid');
+  ldapFactory.close();
+});
+
 test('build', async () => {
   const ldapFactory = new LDAPFactory('test/ldap.conf');
   const webXmlPath = path.resolve('test/web.xml');

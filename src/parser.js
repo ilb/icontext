@@ -36,10 +36,10 @@ function parseUrl(value, context) {
   return value;
 }
 function parseBoolean(value) {
-  if (['true', 'false'].indexOf(value) === -1) {
+  if ([null, 'true', 'false'].indexOf(value) === -1) {
     throw new Error(`value = ${value} for Boolean invalid`);
   }
-  return value === 'true';
+  return value === null ? null : value === 'true';
 }
 
 module.exports = { parseValue };
