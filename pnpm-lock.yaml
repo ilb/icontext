@@ -1,19 +1,19 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@ilb/node_ldap': 1.1.1
   debug: ^4.3.4
   dotenv: ^16.0.3
   eslint: ^8.0.1
   eslint-config-prettier: ^8.3.0
   eslint-plugin-jest: ^27.2.1
   eslint-plugin-prettier: ^4.0.0
+  ildap: 1.1.1
   jest: ^29.5.0
   prettier: ^2.4.1
   xml2js: ^0.4.23
 
 dependencies:
-  '@ilb/node_ldap': 1.1.1
+  ildap: 1.1.1
   xml2js: 0.4.23
 
 devDependencies:
@@ -404,15 +404,6 @@ packages:
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
-
-  /@ilb/node_ldap/1.1.1:
-    resolution: {integrity: sha512-Gx4egQZlkupsKs7gyZW/BSbeFtFn5qDNiHhoFanVa9GFfmgToG7MMZ/+7HIJAyPNsDLIgAJrokFnu75vBxdDpw==}
-    dependencies:
-      debug: 4.3.4
-      ldapjs-client: 0.1.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
 
   /@istanbuljs/load-nyc-config/1.1.0:
     resolution: {integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==}
@@ -1672,6 +1663,15 @@ packages:
     resolution: {integrity: sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==}
     engines: {node: '>= 4'}
     dev: true
+
+  /ildap/1.1.1:
+    resolution: {integrity: sha512-TL/C1juhdPRteMHGTheUvP12a5wbmF6d43eeNuNLld/5WzYqyAD0i8nbrS0uDc1zpThm/OYruQTRfzSPR7tChg==}
+    dependencies:
+      debug: 4.3.4
+      ldapjs-client: 0.1.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}

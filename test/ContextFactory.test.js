@@ -1,6 +1,6 @@
 const ContextFactory = require('../src/ContextFactory.js');
 const path = require('path');
-const LDAPFactory = require('@ilb/node_ldap');
+const LDAPFactory = require('ildap');
 
 process.env.LDAPPREFIX = 'com.iconicompany';
 

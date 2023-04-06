@@ -1,4 +1,4 @@
-const LDAPFactory = require('@ilb/node_ldap');
+const LDAPFactory = require('ildap');
 const { getDefaultWebXmlPath, getDefaultContextXmlPath } = require('./defaults.js');
 const { readContext } = require('./contextreader.js');
 

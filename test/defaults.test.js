@@ -7,7 +7,7 @@ test('getDefaultContextXmlPath', async () => {
   expect(defaults.getDefaultContextXmlPath()).toStrictEqual(expected);
   process.env.HOME = path.resolve('nonexistent');
   process.env.USERNAME = 'testuser';
-  expected = path.resolve('test/systemcontext/testuser/node_context.xml');
+  expected = path.resolve('test/systemcontext/testuser/icontext.xml');
   expect(defaults.getDefaultContextXmlPath(path.resolve('test/systemcontext'))).toStrictEqual(
     expected
   );
