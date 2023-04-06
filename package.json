@@ -4,7 +4,7 @@
   "description": "",
   "author": "github@iconicompany.com",
   "license": "ISC",
-  "main": "src/ContextFactory.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "node --use-openssl-ca node_modules/jest/bin/jest.js --runInBand"
   },
