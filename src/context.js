@@ -12,6 +12,24 @@ async function buildContext(options) {
 }
 
 /**
+ * asynchronous build with process.env fill
+ */
+async function build(options) {
+  const context = await buildContext(options);
+  Object.assign(process.env, context);
+  return context;
+}
+
+/**
+ * asynchronous build  with process.env fill
+ */
+function buildSync(options) {
+  const context = buildContextSync(options);
+  Object.assign(process.env, context);
+  return context;
+}
+
+/**
  * synchronous wrapper
  * @returns
  */
@@ -37,4 +55,4 @@ if (process.argv[1] == __filename) {
   buildContext().then(JSON.stringify).then(console.log);
 }
 
-module.exports = { buildContext, buildContextSync };
+module.exports = { build, buildSync, buildContext, buildContextSync };

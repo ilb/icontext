@@ -12,10 +12,11 @@ await contextFactory.build(); // per request
 ## Sync call on application start
 
 Add to script or `next.config.js`:
+*Warining*: uses process.swapwnSync, in all possible cases *prefer async version* instead
 
 ```javascript
-const { buildContextSync } = require('icontext');
-buildContextSync();
+const { buildSync } = require('icontext');
+buildSync();
 ```
 
 ### Using --require

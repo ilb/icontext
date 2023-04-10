@@ -29,6 +29,10 @@ async function valueResolver(values, resourceResolver) {
     if (values[prop] === undefined) {
       values[prop] = await resourceResolver(prop);
     }
+    // cleanup unresolved (null values), becose dotenvExpand fails on null values
+    if (values[prop] === null) {
+      delete values[prop];
+    }
   }
   return values;
 }

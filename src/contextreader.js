@@ -17,10 +17,10 @@ function readContext(webXmlPath, contextXmlPath) {
       debug('context.xml', contextValues);
     }
     for (const key in result) {
-      if (process.env[key]) {
+      if (process.env[key] !== undefined) {
         debug('value from ENV[%o]=%o', key, process.env[key]);
         result[key] = process.env[key];
-      } else if (contextValues[key]) {
+      } else if (contextValues[key] !== undefined) {
         debug('value from CONTEXT[%o]=%o', key, contextValues[key]);
         result[key] = contextValues[key];
       }
