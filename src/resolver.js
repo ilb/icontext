@@ -1,5 +1,5 @@
 const createDebug = require('debug');
-const debug = createDebug('node_context');
+const debug = createDebug('icontext');
 
 async function getResourceResolver(ldapFactory) {
   const ldapResource = await ldapFactory.getLDAPResource();

@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const createDebug = require('debug');
-const debug = createDebug('node_context');
+const debug = createDebug('icontext');
 
 function getDefaultWebXmlPath() {
   if (process.env.CONTEXT_WEBXML) {

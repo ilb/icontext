@@ -2,7 +2,7 @@ const fs = require('fs');
 const { parseWebXml } = require('./webxml.js');
 const { parseContextXml } = require('./contextxml.js');
 const createDebug = require('debug');
-const debug = createDebug('node_context');
+const debug = createDebug('icontext');
 
 function readContext(webXmlPath, contextXmlPath) {
   const result = {};

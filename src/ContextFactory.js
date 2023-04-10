@@ -4,7 +4,7 @@ const { readContext } = require('./contextreader.js');
 
 const createDebug = require('debug');
 const { ldapResolver } = require('./resolver.js');
-const debug = createDebug('node_context');
+const debug = createDebug('icontext');
 
 class ContextFactory {
   constructor({ webXmlPath, contextXmlPath, ldapFactory } = {}) {
