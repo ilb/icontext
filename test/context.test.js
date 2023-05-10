@@ -7,7 +7,8 @@ test('buildContext', async () => {
   const context = await buildContext();
   const expected = {
     'apps.testapp.db': 'mysql://localhost/testapp',
-    'apps.testapp.fix': null
+    'apps.testapp.fix': null,
+    'apps.testapp.ws': 'url'
   };
   expect(context).toStrictEqual(expected);
 });
@@ -18,7 +19,8 @@ test('buildContextSync', async () => {
   const context = buildContextSync();
   const expected = {
     'apps.testapp.db': 'mysql://localhost/testapp',
-    'apps.testapp.fix': null
+    'apps.testapp.fix': null,
+    'apps.testapp.ws': 'url'
   };
   expect(context).toStrictEqual(expected);
 });

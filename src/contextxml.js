@@ -7,6 +7,11 @@ function parseContextXml(src) {
   if (sourceConfig.Context && sourceConfig.Context.Environment) {
     sourceConfig.Context.Environment.forEach((environment) => {
       const val = getEnvironmentValue(environment);
+
+      if (val.name.startsWith('.')) {
+        val.name = val.name.substring(1);
+      }
+
       parsedConfig[val.name] = val.value;
     });
   }

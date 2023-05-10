@@ -23,7 +23,7 @@ test('buildContextWithoutLdap', async () => {
     'apps.testapp.certfile': '/etc/certs/testapp.pem',
     'apps.testapp.cert_PASSWORD': 'cert_pass_here',
     'apps.testapp.db_user': 'testapp',
-    'apps.testapp.ws': undefined
+    'apps.testapp.ws': 'url'
   };
   const context = await contextFactory.buildContext();
   ldapFactory.close();
