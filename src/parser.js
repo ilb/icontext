@@ -21,7 +21,7 @@ function parseValue(type, value) {
  * @returns valid url
  */
 function parseUrl(value, context) {
-  value = value.replace(/\$\{(.+?)\}/g, (match, tag) => context[tag.trim()]);
+  value = parseString(value, context);
 
   const bs = value.indexOf('@');
   const es = value.indexOf('://');
