@@ -1,7 +1,17 @@
 const { parseValue } = require('../src/parser.js');
 
 test('parseValue', async () => {
-  expect(parseValue('java.lang.String', 'string')).toStrictEqual('string');
+  expect(parseValue('java.lang.String', 'string')({})).toStrictEqual('string');
+  const contextString = {};
+  contextString['apps.testapp.db_user'] = 'testapp';
+  contextString['apps.testapp.db_PASSWORD'] = 'db_password_here';
+  contextString['apps.testapp.db'] = 'sqlserver://localhost;database=db_name';
+  expect(
+    parseValue(
+      'java.lang.String',
+      '${apps.testapp.db};user=${apps.testapp.db_user};password=${apps.testapp.db_PASSWORD};encrypt=true;integratedSecurity=false;trustServerCertificate=true'
+    )(contextString)
+  ).toStrictEqual('sqlserver://localhost;database=db_name;user=testapp;password=db_password_here;encrypt=true;integratedSecurity=false;trustServerCertificate=true');
   expect(parseValue('java.lang.Boolean', 'true')).toStrictEqual(true);
   expect(parseValue('java.lang.Boolean', 'false')).toStrictEqual(false);
   expect(() => parseValue('java.lang.Boolean', 'ttt')).toThrow('invalid');

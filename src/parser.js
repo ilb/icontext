@@ -1,5 +1,5 @@
 const PARSERS = {
-  'java.lang.String': (value) => value,
+  'java.lang.String': (value) => (context) => parseString(value, context),
   'java.lang.Boolean': parseBoolean,
   'java.lang.Integer': (value) => Number(value),
   'java.lang.Float': (value) => Number(value),
@@ -35,6 +35,11 @@ function parseUrl(value, context) {
   }
   return value;
 }
+
+function parseString(value, context) {
+  return value.replace(/\$\{(.+?)\}/g, (match, tag) => context[tag.trim()]);
+}
+
 function parseBoolean(value) {
   if ([null, 'true', 'false'].indexOf(value) === -1) {
     throw new Error(`value = ${value} for Boolean invalid`);
