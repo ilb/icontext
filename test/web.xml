@@ -28,12 +28,12 @@
     <env-entry-type>java.net.URL</env-entry-type>
     <env-entry-value>${apps.testapp.db_user}:${apps.testapp.db_PASSWORD}@${apps.testapp.db}</env-entry-value>
   </env-entry>
-  <!-- <env-entry>
+  <env-entry>
     <description>настройка БД для MS SQL</description>
     <env-entry-name>DATABASE_URL_MSSQL</env-entry-name>
     <env-entry-type>java.lang.String</env-entry-type>
     <env-entry-value>${apps.testapp.db};user=${apps.testapp.db_user};password=${apps.testapp.db_PASSWORD};encrypt=true;integratedSecurity=false;trustServerCertificate=true</env-entry-value>
-  </env-entry> -->
+  </env-entry>
   <env-entry>
     <description>файл с сертификатом, который будем использовать для аутентификации в других ресурсах</description>
     <env-entry-name>apps.testapp.certfile</env-entry-name>

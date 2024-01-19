@@ -37,7 +37,8 @@ function parseUrl(value, context) {
 }
 
 function parseString(value, context) {
-  return value.replace(/\$\{(.+?)\}/g, (match, tag) => context[tag.trim()]);
+  if (value) return value.replace(/\$\{(.+?)\}/g, (match, tag) => context[tag.trim()])
+  return value;
 }
 
 function parseBoolean(value) {
