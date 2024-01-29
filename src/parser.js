@@ -1,5 +1,5 @@
 const PARSERS = {
-  'java.lang.String': (value) => value,
+  'java.lang.String': (value) => (context) => parseString(value, context),
   'java.lang.Boolean': parseBoolean,
   'java.lang.Integer': (value) => Number(value),
   'java.lang.Float': (value) => Number(value),
@@ -21,7 +21,7 @@ function parseValue(type, value) {
  * @returns valid url
  */
 function parseUrl(value, context) {
-  value = value.replace(/\$\{(.+?)\}/g, (match, tag) => context[tag.trim()]);
+  value = parseString(value, context);
 
   const bs = value.indexOf('@');
   const es = value.indexOf('://');
@@ -35,6 +35,12 @@ function parseUrl(value, context) {
   }
   return value;
 }
+
+function parseString(value, context) {
+  if (value) return value.replace(/\$\{(.+?)\}/g, (match, tag) => context[tag.trim()])
+  return value;
+}
+
 function parseBoolean(value) {
   if ([null, 'true', 'false'].indexOf(value) === -1) {
     throw new Error(`value = ${value} for Boolean invalid`);

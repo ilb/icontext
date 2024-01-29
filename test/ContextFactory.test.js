@@ -18,6 +18,7 @@ test('buildContextWithoutLdap', async () => {
 
   const expected = {
     DATABASE_URL: 'testapp:db_password_here@undefined',
+    DATABASE_URL_MSSQL: 'undefined;user=testapp;password=db_password_here;encrypt=true;integratedSecurity=false;trustServerCertificate=true',
     'apps.testapp.db': undefined,
     'apps.testapp.db_PASSWORD': 'db_password_here',
     'apps.testapp.certfile': '/etc/certs/testapp.pem',
