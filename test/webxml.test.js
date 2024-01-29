@@ -11,10 +11,15 @@ test('parses context.xml', async () => {
     'apps.testapp.db_PASSWORD': null,
     'apps.testapp.db_user': 'testapp',
     DATABASE_URL: expect.anything(),
+    DATABASE_URL_MSSQL: expect.anything(),
     'apps.testapp.certfile': '/etc/certs/testapp.pem',
     'apps.testapp.cert_PASSWORD': null
   };
   const webxml = fs.readFileSync(contextPath);
   const values = parseWebXml(webxml);
+  values['apps.testapp.cert_PASSWORD'] = values['apps.testapp.cert_PASSWORD']({});
+  values['apps.testapp.certfile'] = values['apps.testapp.certfile']({});
+  values['apps.testapp.db_PASSWORD'] = values['apps.testapp.db_PASSWORD']({});
+  values['apps.testapp.db_user'] = values['apps.testapp.db_user']({});
   expect(values).toStrictEqual(expected);
 });
