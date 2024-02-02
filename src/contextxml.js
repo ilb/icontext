@@ -44,7 +44,8 @@ function getEnvironmentValue(environment) {
     throw new Error('incorrect Environment entry: value empty ' + JSON.stringify(environment));
   }
 
-  const value = parseValue(type, rawValue);
+  let value = parseValue(type, rawValue);
+  if (type === 'java.lang.String' && !/\$\{(.+?)\}/g.test(rawValue)) value = value();
   //console.log(rawValue, type, value);
   return { name, value };
 }
