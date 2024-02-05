@@ -12,9 +12,5 @@ test('parses context.xml', async () => {
   };
   const contextXml = fs.readFileSync(contextPath);
   const values = parseContextXml(contextXml);
-  values['apps.testapp.certfile'] = values['apps.testapp.certfile']({});
-  values['apps.testapp.cert_PASSWORD'] = values['apps.testapp.cert_PASSWORD']({});
-  values['apps.testapp.db_PASSWORD'] = values['apps.testapp.db_PASSWORD']({});
-  values['apps.testapp.ws'] = values['apps.testapp.ws']({});
   expect(values).toStrictEqual(expected);
 });
