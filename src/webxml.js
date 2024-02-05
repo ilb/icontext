@@ -46,7 +46,8 @@ function getEnvEntryValue(entry) {
     throw new Error('env-entry-name missing, incorrect entry ' + JSON.stringify(entry));
   }
   let value = parseValue(type, rawValue);
-  if (type === 'java.lang.String' && !/\$\{(.+?)\}/g.test(rawValue)) value = value();
+  const isVar = /\$\{(.+?)\}/g;
+  if (type === 'java.lang.String' && !isVar.test(rawValue)) value = value();
   return { type, name, value };
 }
 function getResourceEntryValue(resource) {

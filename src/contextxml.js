@@ -45,7 +45,8 @@ function getEnvironmentValue(environment) {
   }
 
   let value = parseValue(type, rawValue);
-  if (type === 'java.lang.String' && !/\$\{(.+?)\}/g.test(rawValue)) value = value();
+  const isVar = /\$\{(.+?)\}/g;
+  if (type === 'java.lang.String' && !isVar.test(rawValue)) value = value();
   //console.log(rawValue, type, value);
   return { name, value };
 }
