@@ -18,7 +18,7 @@ devDependencies:
     version: 4.3.4
   dotenv:
     specifier: ^16.0.3
-    version: 16.4.2
+    version: 16.4.4
   eslint:
     specifier: ^8.0.1
     version: 8.56.0
@@ -1400,8 +1400,8 @@ packages:
       esutils: 2.0.3
     dev: true
 
-  /dotenv@16.4.2:
-    resolution: {integrity: sha512-rZSSFxke7d9nYQ5NeMIwp5PP+f8wXgKNljpOb7KtH6SKW1cEqcXAz9VSJYVLKe7Jhup/gUYOkaeSVyK8GJ+nBg==}
+  /dotenv@16.4.4:
+    resolution: {integrity: sha512-XvPXc8XAQThSjAbY6cQ/9PcBXmFoWuw1sQ3b8HqUCR6ziGXjkTi//kB9SWa2UwqlgdAIuRqAa/9hVljzPehbYg==}
     engines: {node: '>=12'}
     dev: true
 
