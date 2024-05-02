@@ -17,10 +17,10 @@ function readContext(webXmlPath, contextXmlPath) {
     }
     for (const key in result) {
       if (process.env[key] !== undefined) {
-        debug('icontext', 'value from ENV[%o]=%o', key, process.env[key]);
+        debug('icontext', 'value from ENV: %o', { [key]: process.env[key] });
         result[key] = process.env[key];
       } else if (contextValues[key] !== undefined) {
-        debug('icontext', 'value from CONTEXT[%o]=%o', key, contextValues[key]);
+        debug('icontext', 'value from CONTEXT: %o', { [key]: contextValues[key] });
         result[key] = contextValues[key];
       }
     }
