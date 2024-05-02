@@ -2,17 +2,15 @@ const LDAPFactory = require('ildap');
 const { getDefaultWebXmlPath, getDefaultContextXmlPath } = require('./defaults.js');
 const { readContext } = require('./contextreader.js');
 
-const createDebug = require('debug');
 const { ldapResolver } = require('./resolver.js');
 const { hiddenDebug } = require('./helpers/DebugHelper.js');
-const debug = createDebug('icontext');
 
 class ContextFactory {
   constructor({ webXmlPath, contextXmlPath, ldapFactory } = {}) {
     this.webXmlPath = webXmlPath || getDefaultWebXmlPath();
     this.contextXmlPath = contextXmlPath || getDefaultContextXmlPath();
     this.ldapFactory = ldapFactory || new LDAPFactory();
-    hiddenDebug(debug, 'webXmlPath:', this.webXmlPath, 'contextXmlPath:', this.contextXmlPath);
+    hiddenDebug('icontext', 'webXmlPath:', this.webXmlPath, 'contextXmlPath:', this.contextXmlPath);
   }
 
   /**
@@ -32,11 +30,11 @@ class ContextFactory {
    */
   async buildContext() {
     const context = readContext(this.webXmlPath, this.contextXmlPath);
-    hiddenDebug(debug, 'merged context', context);
+    hiddenDebug('icontext', 'merged context', context);
     await ldapResolver(context, this.ldapFactory);
-    hiddenDebug(debug, 'ldap context', context);
+    hiddenDebug('icontext', 'ldap context', context);
     valueResolver(context);
-    hiddenDebug(debug, 'resolved context', context);
+    hiddenDebug('icontext', 'resolved context', context);
     return context;
   }
   close() {

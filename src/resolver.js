@@ -1,18 +1,16 @@
-const createDebug = require('debug');
 const { hiddenDebug } = require('./helpers/DebugHelper');
-const debug = createDebug('icontext');
 
 async function getResourceResolver(ldapFactory) {
   const ldapResource = await ldapFactory.getLDAPResource();
   const ldapPrefix = process.env.LDAPPREFIX;
-  hiddenDebug(debug, 'ldapPrefix = %s', ldapPrefix);
+  hiddenDebug('icontext', 'ldapPrefix = %s', ldapPrefix);
 
   async function resourceResolver(name) {
     if (ldapPrefix) {
       name = ldapPrefix + '.' + name;
     }
     const value = await ldapResource.lookup(name);
-    hiddenDebug(debug, 'ldapResource.lookup(%s) = %s', name, value);
+    hiddenDebug('icontext', 'ldapResource.lookup(%s) = %s', name, value);
     return value;
   }
 
