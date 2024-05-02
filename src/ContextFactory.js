@@ -2,16 +2,15 @@ const LDAPFactory = require('ildap');
 const { getDefaultWebXmlPath, getDefaultContextXmlPath } = require('./defaults.js');
 const { readContext } = require('./contextreader.js');
 
-const createDebug = require('debug');
 const { ldapResolver } = require('./resolver.js');
-const debug = createDebug('icontext');
+const { debug } = require('./helpers/DebugHelper.js');
 
 class ContextFactory {
   constructor({ webXmlPath, contextXmlPath, ldapFactory } = {}) {
     this.webXmlPath = webXmlPath || getDefaultWebXmlPath();
     this.contextXmlPath = contextXmlPath || getDefaultContextXmlPath();
     this.ldapFactory = ldapFactory || new LDAPFactory();
-    debug('webXmlPath:', this.webXmlPath, 'contextXmlPath:', this.contextXmlPath);
+    debug('icontext', 'webXmlPath:', this.webXmlPath, 'contextXmlPath:', this.contextXmlPath);
   }
 
   /**
@@ -31,11 +30,11 @@ class ContextFactory {
    */
   async buildContext() {
     const context = readContext(this.webXmlPath, this.contextXmlPath);
-    debug('merged context', context);
+    debug('icontext', 'merged context', context);
     await ldapResolver(context, this.ldapFactory);
-    debug('ldap context', context);
+    debug('icontext', 'ldap context', context);
     valueResolver(context);
-    debug('resolved context', context);
+    debug('icontext', 'resolved context', context);
     return context;
   }
   close() {
