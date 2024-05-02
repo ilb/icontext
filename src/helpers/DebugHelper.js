@@ -6,7 +6,7 @@ const createDebug = require('debug');
  * @param  {...any} args
  * @returns {Array}
  */
-async function hiddenDebug(debugName, ...args) {
+async function debug(debugName, ...args) {
   const debug = createDebug(debugName)
   const secretKeys = ['_PASSWORD']
   function replacer(key, value) {
@@ -18,4 +18,4 @@ async function hiddenDebug(debugName, ...args) {
   return debug(...(args.map(obj => JSON.parse(JSON.stringify(obj, replacer)))));
 };
 
-module.exports = { hiddenDebug }
+module.exports = { debug }

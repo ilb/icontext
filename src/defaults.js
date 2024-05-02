@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const { hiddenDebug } = require('./helpers/DebugHelper');
+const { debug } = require('./helpers/DebugHelper');
 
 function getDefaultWebXmlPath() {
   if (process.env.CONTEXT_WEBXML) {
@@ -14,13 +14,13 @@ function getDefaultContextXmlPath(systemContextBase = '/etc/nodejs/context') {
   }
   let contextXmlPath = path.resolve(path.join(process.env.HOME, '.config/context.xml'));
   let contextXmlPathExists = fs.existsSync(contextXmlPath);
-  hiddenDebug('icontext', 'contextXmlPath = %s, exists = %o', contextXmlPath, contextXmlPathExists);
+  debug('icontext', 'contextXmlPath = %s, exists = %o', contextXmlPath, contextXmlPathExists);
   if (!contextXmlPathExists) {
     const userName = process.env.USERNAME || process.env.USER;
     const workDir = path.basename(process.cwd());
     contextXmlPath = `${systemContextBase}/${userName}/${workDir}.xml`;
     contextXmlPathExists = fs.existsSync(contextXmlPath);
-    hiddenDebug('icontext', 'contextXmlPath = %s, exists = %o', contextXmlPath, contextXmlPathExists);
+    debug('icontext', 'contextXmlPath = %s, exists = %o', contextXmlPath, contextXmlPathExists);
     if (!contextXmlPathExists) {
       contextXmlPath = null;
     }
