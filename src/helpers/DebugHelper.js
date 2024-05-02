@@ -1,9 +1,10 @@
 /**
  * The method hides key arguments from secretKeys
+ * @param {Function} debug
  * @param  {...any} args
  * @returns {Array}
  */
-async function hiding(...args) {
+async function hiddenDebug(debug, ...args) {
   const secretKeys = ['_PASSWORD']
   function replacer(key, value) {
     if (secretKeys.some((k) => key.includes(k))) {
@@ -11,7 +12,7 @@ async function hiding(...args) {
     };
     return value;
   };
-  return args.map(obj => JSON.parse(JSON.stringify(obj, replacer)));
+  return debug(...(args.map(obj => JSON.parse(JSON.stringify(obj, replacer)))));
 };
 
-module.exports = { hiding }
+module.exports = { hiddenDebug }
