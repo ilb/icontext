@@ -8,7 +8,7 @@ const createDebug = require('debug');
  */
 async function debug(debugName, ...args) {
   const debug = createDebug(debugName)
-  const secretKeys = ['_PASSWORD']
+  const secretKeys = ['_PASSWORD', 'DATABASE_URL']
   function replacer(key, value) {
     if (secretKeys.some((k) => key.includes(k))) {
       return "*****";
