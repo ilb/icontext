@@ -7,11 +7,17 @@ const createDebug = require('debug');
  * @returns {Array}
  */
 async function debug(debugName, ...args) {
-  const debug = createDebug(debugName)
-  const secretKeys = ['_PASSWORD', 'DATABASE_URL']
+  const debug = createDebug(debugName);
+  const secretKeys = ['_PASSWORD'];
+  const databaseUrl = ['DATABASE_URL'];
   function replacer(key, value) {
     if (secretKeys.some((k) => key.includes(k))) {
       return "*****";
+    }
+    if (databaseUrl.some((k) => key.includes(k))) {
+      if (typeof value === 'string') {
+        return value.replace((value.split(":")[2].split("@")[0]), "*****");
+      };
     }
     return value;
   }
