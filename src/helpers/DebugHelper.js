@@ -16,7 +16,12 @@ async function debug(debugName, ...args) {
     }
     if (databaseUrl.some((k) => key.includes(k))) {
       if (typeof value === 'string') {
-        return value.replace((value.split(":")[2].split("@")[0]), "*****");
+        const prefixEnd = value.indexOf("://") + 3;
+        const start = value.indexOf(":", prefixEnd);
+        const end = value.indexOf("@");
+        if (start !== -1 && end !== -1) {
+          return value.substring(0, start + 1) + "*****" + value.substring(end);
+        }
       };
     }
     return value;
