@@ -22,7 +22,7 @@
   "devDependencies": {
     "debug": "^4.3.4",
     "dotenv": "^16.0.3",
-    "eslint": "^8.0.1",
+    "eslint": "^9.19.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-jest": "^28.2.0",
     "eslint-plugin-prettier": "^5.0.0",
