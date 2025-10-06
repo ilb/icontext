@@ -20,7 +20,7 @@ importers:
         version: 4.4.3
       dotenv:
         specifier: ^17.0.0
-        version: 17.2.2
+        version: 17.2.3
       eslint:
         specifier: ^9.19.0
         version: 9.37.0
@@ -782,8 +782,8 @@ packages:
     resolution: {integrity: sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==}
     engines: {node: '>=8'}
 
-  dotenv@17.2.2:
-    resolution: {integrity: sha512-Sf2LSQP+bOlhKWWyhFsn0UsfdK/kCWRv1iuA2gXAwt3dyNabr6QSj00I2V10pidqz69soatm9ZwZvpQMTIOd5Q==}
+  dotenv@17.2.3:
+    resolution: {integrity: sha512-JVUnt+DUIzu87TABbhPmNfVdBDt18BLOWjMUFJMSi/Qqg7NTYtabbvSNJGOJ7afbRuv9D/lngizHtP7QyLQ+9w==}
     engines: {node: '>=12'}
 
   eastasianwidth@0.2.0:
@@ -2552,7 +2552,7 @@ snapshots:
 
   detect-newline@3.1.0: {}
 
-  dotenv@17.2.2: {}
+  dotenv@17.2.3: {}
 
   eastasianwidth@0.2.0: {}
 
