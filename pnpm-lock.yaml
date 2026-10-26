@@ -20,7 +20,7 @@ importers:
         version: 4.4.3(supports-color@8.1.1)
       dotenv:
         specifier: ^18.0.0
-        version: 18.0.8
+        version: 18.0.9
       eslint:
         specifier: ^10.0.1
         version: 10.13.0(supports-color@8.1.1)
@@ -898,8 +898,8 @@ packages:
     resolution: {integrity: sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==}
     engines: {node: '>=8'}
 
-  dotenv@18.0.8:
-    resolution: {integrity: sha512-2KDeoFoK/zRtcnbunCDlLG5VWVMcyqeQc6iK65o231nfNAcuGrKoqUQfJFUtBI+QlShk5HKIHxwebBtUl3rEfA==}
+  dotenv@18.0.9:
+    resolution: {integrity: sha512-3fVOW4cB02R066PUSwn8O4TJyz9NckQl7F81blIbaq9jKBm2tSmOKky7ZHIXzGvkVPXCSn6jkpziBPZdGFs8Tw==}
     engines: {node: '>=12'}
     hasBin: true
 
@@ -2674,7 +2674,7 @@ snapshots:
 
   detect-newline@3.1.0: {}
 
-  dotenv@18.0.8: {}
+  dotenv@18.0.9: {}
 
   eastasianwidth@0.2.0: {}
 
